@@ -59,14 +59,32 @@ background:linear-gradient(170deg,#1c1c22,#0e0e12);border:1px solid var(--line)}
 .tc li:before{left:2px;top:13px;width:8px;height:4px}
 .tc .btn{margin:0;padding:13px}
 .ad{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px;margin-bottom:12px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(160deg,var(--s2),var(--s1))}
-.ad b{font-weight:600}.ad span{color:var(--gold2);font-weight:700;white-space:nowrap}
-:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-
+.ad b{flex:1;font-weight:600}.ad span{color:var(--gold2);font-weight:700;text-align:right}
 .gt{font:600 20px/1.2 var(--sans);margin:26px 0 6px}
 .gn{margin:0 0 12px;font-size:14px}
-.ad b{flex:1}.ad span{text-align:right}
- 
+.sh{font:600 28px/1.15 var(--serif);margin:36px 0 16px}
+.adv{padding:6px 18px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(160deg,var(--s2),var(--s1))}
+.adv>div{display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-top:1px solid rgba(212,175,106,.14)}
+.adv>div:first-child{border-top:0}
+.ic{flex:0 0 42px;height:42px;border-radius:14px;display:grid;place-items:center;background:rgba(212,175,106,.10);border:1px solid var(--line)}
+.ic svg{width:22px;height:22px;fill:none;stroke:var(--gold2);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.adv b{display:block;font-weight:700;margin-bottom:2px}
+.adv span{display:block;color:var(--mut);font-size:14px;line-height:1.45}
+.orn{width:14px;height:14px;margin:44px auto 20px;border:1.5px solid var(--gold);transform:rotate(45deg);box-shadow:0 0 0 6px rgba(212,175,106,.08),0 0 18px rgba(212,175,106,.35)}
+.pts{margin-bottom:6px}
+.pt{position:relative;padding:15px 0 15px 30px;border-top:1px solid rgba(212,175,106,.14);color:var(--mut);font-size:15px;line-height:1.5}
+.pt:last-child{border-bottom:1px solid rgba(212,175,106,.14)}
+.pt:before{content:"";position:absolute;left:6px;top:23px;width:8px;height:8px;background:linear-gradient(135deg,var(--gold2),var(--gold3));transform:rotate(45deg)}
+.pt b{color:var(--tx);font-weight:700}
+.cta{position:relative;overflow:hidden;text-align:center;margin:38px 0 8px;padding:32px 22px 24px;border-radius:26px;border:1px solid rgba(212,175,106,.38);
+background:radial-gradient(90% 110% at 50% 0%,rgba(212,175,106,.22),transparent 70%),linear-gradient(170deg,#1c1c22,#0e0e12);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.cta:before{content:"";position:absolute;left:50%;top:-90px;width:200px;height:200px;margin-left:-100px;border-radius:50%;border:1px solid var(--line);box-shadow:0 0 0 22px rgba(212,175,106,.04),0 0 0 44px rgba(212,175,106,.03)}
+.cta>*{position:relative}
+.cta .sh{margin:0 0 10px}
+.cta p{margin:0 0 22px;font-size:15px}
+.cta .btn{margin:0}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
 
 <div id="scroll">
@@ -76,8 +94,31 @@ background:linear-gradient(170deg,#1c1c22,#0e0e12);border:1px solid var(--line)}
  <div class="wrap">
   <h2>Пакеты</h2>
   <div class="rail" data-rail></div>
-  <button class="btn" data-go="cases">Примеры работ</button>
-  <button class="btn" data-go="apply">Оставить заявку</button>
+
+  <h2 class="sh">Всё необходимое для вашего бизнеса — в одном приложении</h2>
+  <div class="adv">
+   <div><i class="ic"><svg viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h12a2 2 0 012 2v9a2 2 0 01-2 2H10l-5 4v-4H6a2 2 0 01-2-2z"/></svg></i>
+    <p style="margin:0"><b>Удобно клиентам</b><span>Услуги и информация доступны прямо в Telegram.</span></p></div>
+   <div><i class="ic"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></i>
+    <p style="margin:0"><b>Под ваши задачи</b><span>Структура и функциональность подбираются под бизнес.</span></p></div>
+   <div><i class="ic"><svg viewBox="0 0 24 24"><path d="M13 3L5 14h6l-1 7 8-11h-6z"/></svg></i>
+    <p style="margin:0"><b>Без лишних установок</b><span>Клиент открывает приложение в Telegram в одно касание.</span></p></div>
+  </div>
+
+  <div class="orn"></div>
+  <h2 class="sh" style="text-align:center;margin-top:0">Больше возможностей для вашего бизнеса</h2>
+  <div class="pts">
+   <div class="pt"><b>Ничего не теряется.</b> Заявки приходят вам в Telegram и в таблицу, клиент записывается за минуту в любое время.</div>
+   <div class="pt"><b>Меньше одинаковых вопросов.</b> Цены, услуги и ответы открыты сразу, не нужно писать в личку.</div>
+   <div class="pt"><b>Там, где клиент уже есть.</b> Приложение открывается в Telegram, без скачивания и регистрации.</div>
+   <div class="pt"><b>Акции на виду.</b> Баннеры и новости видны при входе, а не тонут в переписках.</div>
+  </div>
+
+  <div class="cta">
+   <h2 class="sh">Не знаете, какой тариф выбрать?</h2>
+   <p>Расскажите о своей задаче — поможем подобрать подходящее решение для вашего бизнеса.</p>
+   <button class="btn pri" data-pick="Не знаю">Расскажите о своём бизнесе</button>
+  </div>
  </div>
 </section>
 
@@ -175,7 +216,7 @@ function go(id){$$(".page").forEach(p=>p.classList.toggle("on",p.id===id));
 document.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)go(b.dataset.go)});
 function cards(){const h=CFG.PACKS.map(k=>`<div class="tc${k.hot?" hot":""}">${k.hot?'<span class="badge">Популярный</span>':""}<h3>${k.n}</h3><div class="pr">${k.p}</div><ul>${k.l.map(x=>`<li>${x}</li>`).join("")}</ul><button class="btn${k.hot?" pri":""}" data-pick="${k.n}">Выбрать</button></div>`).join("");
  $$("[data-rail]").forEach(r=>r.innerHTML=h);
-  $("#addons").innerHTML=CFG.ADDONS.map(g=>`<h3 class="gt">${g.t}</h3>${g.note?`<p class="gn">${g.note}</p>`:""}${g.items.map(a=>`<div class="ad"><b>${a.n}</b><span>${a.p}</span></div>`).join("")}`).join("")}
+ $("#addons").innerHTML=CFG.ADDONS.map(g=>`<h3 class="gt">${g.t}</h3>${g.note?`<p class="gn">${g.note}</p>`:""}${g.items.map(a=>`<div class="ad"><b>${a.n}</b><span>${a.p}</span></div>`).join("")}`).join("")}
 cards();center();addEventListener("load",center);
 document.addEventListener("click",e=>{const b=e.target.closest("[data-pick]");if(b){$("#f_pack").value=b.dataset.pick;go("apply")}});
 $("#tgLink").href="https://t.me/"+CFG.TG_USER;$("#waLink").href="https://wa.me/"+CFG.WA_PHONE;
