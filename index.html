@@ -62,6 +62,11 @@ background:linear-gradient(170deg,#1c1c22,#0e0e12);border:1px solid var(--line)}
 .ad b{font-weight:600}.ad span{color:var(--gold2);font-weight:700;white-space:nowrap}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.gt{font:600 20px/1.2 var(--sans);margin:26px 0 6px}
+.gn{margin:0 0 12px;font-size:14px}
+.ad b{flex:1}.ad span{text-align:right}
+ 
 </style></head><body>
 
 <div id="scroll">
@@ -138,9 +143,23 @@ const CFG={
   {n:"Про",p:"200 000 AMD",l:["Всё из «Стандарт»","Встраивание CRM-формы","Промокоды и реферальная система","Магазин с корзиной"]}
  ],
  ADDONS:[
-  {n:"Второй язык",p:"по запросу"},
-  {n:"Сайт",p:"по запросу"},
-  {n:"Календарь записи",p:"по запросу"}
+  {t:"Дополнительные опции",note:"Добавляются к любому пакету.",items:[
+   {n:"Дополнительный язык (перевод и настройка)",p:"+15 000 AMD"},
+   {n:"Дополнительная страница",p:"+5 500 AMD"},
+   {n:"Подключение CRM (Битрикс24, amoCRM)",p:"+44 000 AMD"},
+   {n:"Промокоды и реферальная система",p:"+29 000 AMD"},
+   {n:"Магазин с корзиной (оплата на месте или переводом)",p:"+73 000 AMD"},
+   {n:"Календарь записи с выбором свободных слотов",p:"от 180 000 AMD"},
+   {n:"Онлайн-оплата картой внутри приложения",p:"по запросу"}
+  ]},
+  {t:"Сайт как дополнительная услуга",items:[
+   {n:"Лендинг (одна страница)",p:"80 000 AMD"},
+   {n:"Сайт до 5–7 страниц",p:"165 000 AMD"},
+   {n:"Сайт + мини-приложение одним заказом",p:"выгода 22 000 AMD"}
+  ]},
+  {t:"Поддержка",items:[
+   {n:"Обновление цен и текстов, мелкие правки, помощь по работе приложения",p:"11 000 AMD / мес"}
+  ]}
  ]
 };
 // =============================================
@@ -156,7 +175,7 @@ function go(id){$$(".page").forEach(p=>p.classList.toggle("on",p.id===id));
 document.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)go(b.dataset.go)});
 function cards(){const h=CFG.PACKS.map(k=>`<div class="tc${k.hot?" hot":""}">${k.hot?'<span class="badge">Популярный</span>':""}<h3>${k.n}</h3><div class="pr">${k.p}</div><ul>${k.l.map(x=>`<li>${x}</li>`).join("")}</ul><button class="btn${k.hot?" pri":""}" data-pick="${k.n}">Выбрать</button></div>`).join("");
  $$("[data-rail]").forEach(r=>r.innerHTML=h);
- $("#addons").innerHTML=CFG.ADDONS.map(a=>`<div class="ad"><b>${a.n}</b><span>${a.p}</span></div>`).join("")}
+  $("#addons").innerHTML=CFG.ADDONS.map(g=>`<h3 class="gt">${g.t}</h3>${g.note?`<p class="gn">${g.note}</p>`:""}${g.items.map(a=>`<div class="ad"><b>${a.n}</b><span>${a.p}</span></div>`).join("")}`).join("")}
 cards();center();addEventListener("load",center);
 document.addEventListener("click",e=>{const b=e.target.closest("[data-pick]");if(b){$("#f_pack").value=b.dataset.pick;go("apply")}});
 $("#tgLink").href="https://t.me/"+CFG.TG_USER;$("#waLink").href="https://wa.me/"+CFG.WA_PHONE;
