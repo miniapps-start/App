@@ -73,6 +73,13 @@ background:linear-gradient(170deg,#1c1c22,#0e0e12);border:1px solid var(--line)}
 .adv b{display:block;font-weight:700;margin-bottom:2px}
 .adv span{display:block;color:var(--mut);font-size:14px;line-height:1.45}
 .orn{width:14px;height:14px;margin:44px auto 20px;border:1.5px solid var(--gold);transform:rotate(45deg);box-shadow:0 0 0 6px rgba(212,175,106,.08),0 0 18px rgba(212,175,106,.35)}
+.seg{display:flex;padding:6px;margin:20px 0 22px;border:1px solid var(--line);border-radius:22px;background:rgba(18,18,22,.82)}
+.seg button{flex:1;background:none;border:0;color:var(--mut);padding:12px 6px;font:600 14px var(--sans);border-radius:16px;cursor:pointer;transition:.2s}
+.seg button.on{color:#1b1407;background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,var(--gold3));box-shadow:0 6px 18px rgba(212,175,106,.22)}
+.tpanel{display:none;padding:22px 18px 8px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(160deg,var(--s2),var(--s1))}
+.tpanel.on{display:block;animation:in .35s ease}
+.tsub{font:600 24px/1.2 var(--serif);color:var(--gold2);text-align:center;margin-bottom:10px}
+.pt b{display:block;margin-bottom:2px}
 .pts{margin-bottom:6px}
 .pt{position:relative;padding:15px 0 15px 30px;border-top:1px solid rgba(212,175,106,.14);color:var(--mut);font-size:15px;line-height:1.5}
 .pt:last-child{border-bottom:1px solid rgba(212,175,106,.14)}
@@ -97,23 +104,31 @@ background:radial-gradient(90% 110% at 50% 0%,rgba(212,175,106,.22),transparent 
   <h2>Пакеты</h2>
   <div class="rail" data-rail></div>
 
-  <h2 class="sh">Всё необходимое для вашего бизнеса — в одном приложении</h2>
-  <div class="adv">
-   <div><i class="ic"><svg viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h12a2 2 0 012 2v9a2 2 0 01-2 2H10l-5 4v-4H6a2 2 0 01-2-2z"/></svg></i>
-    <p style="margin:0"><b>Удобно клиентам</b><span>Услуги и информация доступны прямо в Telegram.</span></p></div>
-   <div><i class="ic"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></i>
-    <p style="margin:0"><b>Под ваши задачи</b><span>Структура и функциональность подбираются под бизнес.</span></p></div>
-   <div><i class="ic"><svg viewBox="0 0 24 24"><path d="M13 3L5 14h6l-1 7 8-11h-6z"/></svg></i>
-    <p style="margin:0"><b>Без лишних установок</b><span>Клиент открывает приложение в Telegram в одно касание.</span></p></div>
+  <h2 class="sh" style="text-align:center">Два взгляда. Одна система.</h2>
+  <p style="text-align:center;margin-top:-6px">Вашему бизнесу — больше контроля. Вашим клиентам — больше удобства.</p>
+  <div class="seg" role="tablist">
+   <button class="on" data-tab="t_biz" role="tab">Для вашего бизнеса</button>
+   <button data-tab="t_cli" role="tab">Для ваших клиентов</button>
   </div>
-
-  <div class="orn"></div>
-  <h2 class="sh" style="text-align:center;margin-top:0">Больше возможностей для вашего бизнеса</h2>
-  <div class="pts">
-   <div class="pt"><b>Ничего не теряется.</b> Заявки приходят вам в Telegram и в таблицу, клиент записывается за минуту в любое время.</div>
-   <div class="pt"><b>Меньше одинаковых вопросов.</b> Цены, услуги и ответы открыты сразу, не нужно писать в личку.</div>
-   <div class="pt"><b>Там, где клиент уже есть.</b> Приложение открывается в Telegram, без скачивания и регистрации.</div>
-   <div class="pt"><b>Акции на виду.</b> Баннеры и новости видны при входе, а не тонут в переписках.</div>
+  <div class="tpanel on" id="t_biz">
+   <div class="tsub">Меньше рутины. Больше возможностей для роста.</div>
+   <div class="pts">
+    <div class="pt"><b>Меньше времени на объяснения</b>Клиент самостоятельно изучает услуги, цены и условия вместо того, чтобы каждый раз задавать одни и те же вопросы.</div>
+    <div class="pt"><b>Заявки в одном месте</b>Получайте обращения через форму и направляйте данные в Google Sheets, CRM или другие совместимые системы.</div>
+    <div class="pt"><b>Меньше барьеров для покупки</b>Клиенту проще ознакомиться с предложением, сравнить варианты и перейти к заявке, не покидая привычную среду Telegram.</div>
+    <div class="pt"><b>Акции под вашим контролем</b>Обновляйте предложения и рекламные баннеры через предусмотренный инструмент управления, например Google Sheets.</div>
+    <div class="pt"><b>Функции под ваш бизнес</b>Начните с презентации услуг и постепенно добавляйте формы, каталог, календарь записи и другие интеграции.</div>
+   </div>
+  </div>
+  <div class="tpanel" id="t_cli">
+   <div class="tsub">Всё понятно. Всё под рукой. Ничего лишнего.</div>
+   <div class="pts">
+    <div class="pt"><b>Не нужно искать информацию</b>Услуги, цены, описания и условия собраны в одном удобном месте.</div>
+    <div class="pt"><b>Легче выбрать подходящее</b>Можно сравнить предложения и дополнительные опции, чтобы понять, что подходит вашему клиенту.</div>
+    <div class="pt"><b>Удобно оставить заявку</b>Передача контактов и пожеланий через форму без необходимости долго объяснять задачу в переписке.</div>
+    <div class="pt"><b>Можно выбрать время онлайн</b>Если подключён календарь записи, клиент видит доступные интервалы и может выбрать удобное время.</div>
+    <div class="pt"><b>Всё работает в Telegram</b>Не нужно скачивать отдельное приложение или проходить сложную регистрацию ради обычного обращения.</div>
+   </div>
   </div>
 
   <div class="cta">
@@ -183,7 +198,7 @@ const CFG={
  PACKS:[
   {n:"Старт",p:"70 000 ֏",l:["Mini App на 5 страниц","Каталог услуг","Кнопки связи","Портфолио","Дизайн под бренд"]},
   {n:"Стандарт",hot:1,p:"150 000 ֏",l:["Всё из «Старта», плюс:","+3 страницы Mini App","Форма заявки","Уведомление владельцу в Telegram","Сохранение заявок в Google Sheets","Баннеры с акциями"]},
-  {n:"Про",p:"250 000 ֏",l:["Всё из «Стандарта», плюс:","+5 страниц Mini App","Встраивание готовой CRM-формы через виджет или HTML-код","Блок акций и специальных предложений — Возможность менять текст акции и срок её действия через предусмотренный механизм управления","Раздел отзывы","Удобная навигация и персонализированный интерфейс — адаптация под ваш фирменный стиль. ","Интеграция вашей платёжной системы","Интеграция карты с адресом"]}
+  {n:"Про",p:"250 000 ֏",l:["Всё из «Стандарта», плюс:","+5 страниц Mini App","Встраивание готовой CRM-формы через виджет или HTML-код","Блок акций и специальных предложений — владелец может менять текст акции и срок её действия через предусмотренный механизм управления","Раздел отзывы","Удобная навигация и персонализированный интерфейс — адаптация под фирменный стиль заказчика и мобильный экран","Интеграция вашей платёжной системы","Интеграция карты с адресом"]}
  ],
  ADDONS:[
   {n:"Дополнительный язык",d:"Перевод интерфейса и контента, переключение языка, адаптация всех экранов",p:"20 000 ֏"},
@@ -222,6 +237,9 @@ $$("[data-rail]").forEach(r=>{let down=false,moved=false,sx=0,sl=0;
  addEventListener("mouseup",()=>{if(!down)return;down=false;r.classList.remove("drag");setTimeout(()=>moved=false,0)});
  r.addEventListener("click",e=>{if(moved){e.stopPropagation();e.preventDefault()}},true);
 });
+document.addEventListener("click",e=>{const t=e.target.closest("[data-tab]");if(!t)return;
+ $$("[data-tab]").forEach(b=>b.classList.toggle("on",b===t));
+ $$(".tpanel").forEach(p=>p.classList.toggle("on",p.id===t.dataset.tab))});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-pick]");if(b){$("#f_pack").value=b.dataset.pick;go("apply")}});
 $("#tgLink").href="https://t.me/"+CFG.TG_USER;$("#waLink").href="https://wa.me/"+CFG.WA_PHONE;
 $("#send").onclick=async()=>{
