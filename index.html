@@ -3,35 +3,58 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Мини-приложения для бизнеса</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f1b2d;--card:#18283f;--line:#27405e;--tx:#eef2f7;--mut:#9fb0c6;--ac:#f5a623;--ac2:#ffcc66}
-*{box-sizing:border-box;margin:0}
-body{font:16px/1.5 -apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--tx);padding-bottom:84px}
-.page{display:none;padding:20px 16px;max-width:560px;margin:auto}.page.on{display:block}
-h1{font-size:26px;line-height:1.2;margin-bottom:10px}h2{font-size:21px;margin-bottom:14px}
-p{color:var(--mut);margin-bottom:14px}
-.hero{background:linear-gradient(135deg,#1d3557,#0f1b2d);border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:16px}
-.tag{display:inline-block;background:var(--ac);color:#1a1200;font-weight:700;font-size:12px;padding:3px 10px;border-radius:20px;margin-bottom:10px}
-.btn{display:block;width:100%;text-align:center;text-decoration:none;border:0;border-radius:14px;padding:14px;font-size:16px;font-weight:600;margin-bottom:10px;cursor:pointer;background:var(--card);color:var(--tx);border:1px solid var(--line)}
-.btn.pri{background:var(--ac);color:#1a1200;border:0}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
-.tabs{display:flex;gap:8px;margin-bottom:14px}.tabs button{flex:1;padding:10px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--mut);font-weight:600;font-size:15px}
-.tabs button.on{background:var(--ac);color:#1a1200;border-color:var(--ac)}
-.price{font-size:28px;font-weight:700;color:var(--ac2);margin:4px 0 10px}
-ul{padding-left:20px;color:var(--mut)}li{margin-bottom:6px}
-details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
-summary{font-weight:600;cursor:pointer}details p{margin:10px 0 0}
-label{display:block;font-size:14px;color:var(--mut);margin:12px 0 6px}
-input,select,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0b1626;color:var(--tx);font-size:16px;font-family:inherit}
-nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:#0b1626;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
-nav button{flex:1;background:none;border:0;color:var(--mut);padding:10px 2px;font-size:11px}
-nav button span{display:block;font-size:20px}nav button.on{color:var(--ac)}
-.ok{display:none;text-align:center;padding:40px 10px}.ok h2{color:var(--ac2)}
+:root{--bg:#09090b;--s1:#121216;--s2:#1a1a20;--line:rgba(212,175,106,.22);--tx:#f3efe6;--mut:#a29f96;--gold:#d4af6a;--gold2:#f1d9a0;--gold3:#9c7a3c;
+--serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--sans:"Manrope",-apple-system,"Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+body{font:400 16px/1.6 var(--sans);background:var(--bg);color:var(--tx);padding-bottom:110px;
+background-image:radial-gradient(120% 60% at 50% -10%,rgba(212,175,106,.10),transparent 60%)}
+.page{display:none;padding:28px 20px;max-width:560px;margin:auto}.page.on{display:block;animation:in .35s ease}
+@keyframes in{from{opacity:0}to{opacity:1}}
+h1{font:600 38px/1.08 var(--serif);letter-spacing:-.01em;margin-bottom:16px}
+h2{font:600 32px/1.1 var(--serif);margin-bottom:18px}h3{font:600 24px/1.15 var(--serif);margin-bottom:6px}
+p{color:var(--mut);margin-bottom:16px}
+.hero{position:relative;padding:34px 24px 28px;margin-bottom:22px;border-radius:28px;border:1px solid var(--line);
+background:linear-gradient(160deg,var(--s2),var(--s1) 60%);overflow:hidden}
+.hero:before{content:"";position:absolute;right:-70px;top:-70px;width:220px;height:220px;border-radius:50%;border:1px solid var(--line);box-shadow:0 0 0 28px rgba(212,175,106,.04),0 0 0 56px rgba(212,175,106,.03)}
+.tag{display:inline-block;color:var(--gold2);font-size:13px;font-weight:600;letter-spacing:.04em;padding:6px 14px;border:1px solid var(--line);border-radius:30px;margin-bottom:20px;background:rgba(212,175,106,.06)}
+.rule{width:56px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin:0 0 18px}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;text-decoration:none;border-radius:16px;padding:16px;font:600 16px var(--sans);margin-bottom:12px;cursor:pointer;
+color:var(--tx);background:rgba(255,255,255,.03);border:1px solid var(--line);transition:transform .15s,border-color .2s,background .2s}
+.btn:active{transform:scale(.98)}.btn:hover{border-color:var(--gold)}
+.btn.pri{color:#1b1407;border:0;background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,var(--gold3));
+box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 10px 26px rgba(212,175,106,.22)}
+.btn:disabled{opacity:.6}
+.card{background:linear-gradient(160deg,var(--s2),var(--s1));border:1px solid var(--line);border-radius:22px;padding:24px;margin-bottom:16px}
+.seg{display:flex;padding:4px;margin-bottom:18px;background:var(--s1);border:1px solid var(--line);border-radius:16px}
+.seg button{flex:1;padding:11px;border:0;border-radius:12px;background:none;color:var(--mut);font:600 15px var(--sans);transition:.2s}
+.seg button.on{color:#1b1407;background:linear-gradient(180deg,var(--gold2),var(--gold));box-shadow:0 4px 14px rgba(212,175,106,.25)}
+.price{font:600 44px/1 var(--serif);color:var(--gold2);margin:8px 0 18px}
+ul{list-style:none;padding:0}li{position:relative;padding:10px 0 10px 28px;color:var(--tx);border-top:1px solid rgba(212,175,106,.12)}
+li:before{content:"";position:absolute;left:4px;top:20px;width:9px;height:5px;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg)}
+details{background:linear-gradient(160deg,var(--s2),var(--s1));border:1px solid var(--line);border-radius:18px;padding:18px 20px;margin-bottom:12px}
+summary{font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}summary:after{content:"+";color:var(--gold);font-size:22px;line-height:1}
+details[open] summary:after{content:"–"}details p{margin:12px 0 0}
+label{display:block;font-size:14px;font-weight:500;color:var(--mut);margin:16px 0 8px}
+input,select,textarea{width:100%;padding:15px 16px;border-radius:14px;border:1px solid var(--line);background:var(--s1);color:var(--tx);font:16px var(--sans);outline:0;transition:.2s}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,106,.15)}
+nav{position:fixed;left:16px;right:16px;bottom:calc(14px + env(safe-area-inset-bottom));max-width:528px;margin:auto;display:flex;padding:6px;
+background:rgba(18,18,22,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:24px;box-shadow:0 14px 40px rgba(0,0,0,.6)}
+nav button{flex:1;background:none;border:0;color:var(--mut);padding:9px 2px 7px;font:500 11px var(--sans);border-radius:18px;transition:.2s}
+nav button svg{display:block;margin:0 auto 3px;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+nav button.on{color:var(--gold2);background:rgba(212,175,106,.12)}
+.ok{display:none;text-align:center;padding:70px 10px}.ok h2{color:var(--gold2)}
+.divider{height:1px;background:var(--line);margin:30px 0}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
 
 <section class="page on" id="home">
  <div class="hero"><span class="tag">Telegram Mini App</span>
- <h1>Мини-приложение для вашего бизнеса прямо в Telegram</h1>
+ <h1>Мини-приложение для вашего бизнеса прямо в Telegram</h1><div class="rule"></div>
  <p>Запись, каталог услуг, заявки и акции в одном месте. Клиентам ничего не нужно устанавливать, а вы получаете заявки сразу в Telegram и таблицу.</p></div>
  <button class="btn pri" data-go="packs">Посмотреть пакеты</button>
  <button class="btn" data-go="cases">Примеры работ</button>
@@ -40,7 +63,7 @@ nav button span{display:block;font-size:20px}nav button.on{color:var(--ac)}
 
 <section class="page" id="packs">
  <h2>Пакеты</h2>
- <div class="tabs" id="ptabs"><button class="on" data-p="0">Старт</button><button data-p="1">Стандарт</button><button data-p="2">Про</button></div>
+ <div class="seg" id="ptabs"><button class="on" data-p="0">Старт</button><button data-p="1">Стандарт</button><button data-p="2">Про</button></div>
  <div class="card" id="pbox"></div>
  <p>Нужен второй язык, сайт или календарь записи? Это доп. услуги.</p>
  <button class="btn pri" data-go="apply">Оставить заявку</button>
@@ -49,7 +72,7 @@ nav button span{display:block;font-size:20px}nav button.on{color:var(--ac)}
 <section class="page" id="cases">
  <h2>Примеры</h2>
  <p>Примеры мини-приложений скоро появятся здесь.</p>
- <div class="card"><h3>Демо для мастера маникюра</h3><p>Запись, портфолио работ и прайс. Скоро.</p></div>
+ <div class="card"><h3>Демо для мастера маникюра</h3><p style="margin:0">Запись, портфолио работ и прайс. Скоро.</p></div>
 </section>
 
 <section class="page" id="faq">
@@ -68,9 +91,10 @@ nav button span{display:block;font-size:20px}nav button.on{color:var(--ac)}
  <label>Сфера бизнеса</label><select id="f_biz"><option>Красота</option><option>Клининг</option><option>Услуги</option><option>Магазин</option><option>Другое</option></select>
  <label>Какой пакет интересует</label><select id="f_pack"><option>Старт</option><option>Стандарт</option><option>Про</option><option>Не знаю</option></select>
  <label>Что нужно сделать (необязательно)</label><textarea id="f_note" rows="3"></textarea>
- <button class="btn pri" id="send" style="margin-top:18px">Отправить</button>
- <p id="err" style="color:#ff8a8a"></p>
- <h2 style="margin-top:24px">Контакты</h2>
+ <button class="btn pri" id="send" style="margin-top:24px">Отправить заявку</button>
+ <p id="err" style="color:#ff9b8a"></p>
+ <div class="divider"></div>
+ <h2>Контакты</h2>
  <a class="btn" id="tgLink" target="_blank">Написать в Telegram</a>
  <a class="btn" id="waLink" target="_blank">Написать в WhatsApp</a>
  <p>Отвечаю ежедневно, 10:00–20:00.</p></div>
@@ -78,13 +102,12 @@ nav button span{display:block;font-size:20px}nav button.on{color:var(--ac)}
 </section>
 
 <nav id="nav">
- <button class="on" data-go="home"><span>🏠</span>Главная</button>
- <button data-go="packs"><span>📦</span>Пакеты</button>
- <button data-go="cases"><span>✨</span>Примеры</button>
- <button data-go="faq"><span>❓</span>Вопросы</button>
- <button data-go="apply"><span>✉️</span>Заявка</button>
+ <button class="on" data-go="home"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v8a1 1 0 01-1 1h-4v-6H9v6H5a1 1 0 01-1-1z"/></svg>Главная</button>
+ <button data-go="packs"><svg viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg>Пакеты</button>
+ <button data-go="cases"><svg viewBox="0 0 24 24"><path d="M12 3l2.4 5.6L20 9.3l-4.3 3.9 1.3 5.8L12 16l-5 3 1.3-5.8L4 9.3l5.6-.7z"/></svg>Примеры</button>
+ <button data-go="faq"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 114 2c-.9.6-1.5 1-1.5 2M12 17h.01"/></svg>Вопросы</button>
+ <button data-go="apply"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Заявка</button>
 </nav>
-
 <script>
 // ====== НАСТРОЙКИ: меняйте только здесь ======
 const CFG={
@@ -99,7 +122,7 @@ const CFG={
 };
 // =============================================
 const tg=window.Telegram&&Telegram.WebApp;
-if(tg){tg.ready();tg.expand();try{tg.setHeaderColor("#0f1b2d");tg.setBackgroundColor("#0f1b2d")}catch(e){}}
+if(tg){tg.ready();tg.expand();try{tg.setHeaderColor("#09090b");tg.setBackgroundColor("#0f1b2d")}catch(e){}}
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 function go(id){$$(".page").forEach(p=>p.classList.toggle("on",p.id===id));
  $$("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===id));scrollTo(0,0)}
