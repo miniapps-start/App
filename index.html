@@ -115,8 +115,10 @@ $("#send").onclick=async()=>{
  const u=tg&&tg.initDataUnsafe&&tg.initDataUnsafe.user;
  const body={name,contact,biz:$("#f_biz").value,pack:$("#f_pack").value,note:$("#f_note").value,
   tg_user:u?("@"+(u.username||"")+" id:"+u.id):""};
- try{await fetch(CFG.SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(body)});
-  $("#formBox").style.display="none";$("#ok").style.display="block";if(tg&&tg.HapticFeedback)tg.HapticFeedback.notificationOccurred("success")}
- catch(e){$("#err").textContent="Не удалось отправить, попробуйте ещё раз";$("#send").disabled=false}
+ $("#formBox").style.display="none";$("#ok").style.display="block";
+ if(tg&&tg.HapticFeedback)tg.HapticFeedback.notificationOccurred("success");
+ fetch(CFG.SCRIPT_URL,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(body)})
+ .catch(()=>{$("#ok").style.display="none";$("#formBox").style.display="block";
+  $("#err").textContent="Не удалось отправить, проверьте интернет и попробуйте ещё раз";$("#send").disabled=false});
 };
 </script></body></html>
