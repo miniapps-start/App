@@ -2,9 +2,9 @@
 <html lang="ru"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Мини-приложения для бизнеса</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 :root{--bg:#09090b;--s1:#121216;--s2:#1a1a20;--line:rgba(212,175,106,.22);--tx:#f3efe6;--mut:#a29f96;--gold:#d4af6a;--gold2:#f1d9a0;--gold3:#9c7a3c;
 --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--sans:"Manrope",-apple-system,"Segoe UI",Roboto,sans-serif}
@@ -48,50 +48,82 @@ nav button svg{display:block;margin:0 auto 3px;width:22px;height:22px;fill:none;
 nav button.on{color:var(--gold2);background:rgba(212,175,106,.12)}
 .ok{display:none;text-align:center;padding:70px 10px}.ok h2{color:var(--gold2)}
 .divider{height:1px;background:var(--line);margin:30px 0}
+
+.page#home{padding:0}.wrap{padding:0 20px}
+#home .hero{position:relative;margin:0 0 26px;padding:30px 22px 34px;min-height:340px;border:0;border-radius:0 0 30px 30px;overflow:hidden;
+background:radial-gradient(70% 80% at 80% 30%,rgba(212,175,106,.28),transparent 65%),linear-gradient(180deg,#16161a,#09090b);
+box-shadow:inset 0 -1px 0 rgba(212,175,106,.35),0 24px 50px rgba(0,0,0,.6)}
+#home .hero:before{display:none}
+.stripes,.art{position:absolute;pointer-events:none}
+.stripes{inset:0;width:100%;height:100%}
+.art{right:-34px;bottom:-6px;width:82%;max-width:360px;height:auto;filter:drop-shadow(0 22px 26px rgba(0,0,0,.7))}
+.hero-in{position:relative;max-width:62%}
+#home .hero .tag{background:none;border:0;padding:0;margin-bottom:14px;color:var(--gold);font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase}
+#home .hero h1{font:600 28px/1.15 var(--sans);letter-spacing:-.02em;margin-bottom:14px}
+#home .hero .rule{display:none}
+#home .hero p{margin:0;font-size:14px;line-height:1.55}
+.rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -20px 18px;padding:14px 20px 8px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.tc{position:relative;flex:0 0 74%;max-width:290px;scroll-snap-align:center;display:flex;flex-direction:column;border-radius:22px;padding:22px 18px 18px;
+background:linear-gradient(170deg,#1c1c22,#0e0e12);border:1px solid var(--line)}
+.tc.hot{border-color:var(--gold);box-shadow:0 0 0 1px rgba(212,175,106,.3),0 18px 40px rgba(212,175,106,.14)}
+.badge{position:absolute;top:-11px;right:16px;padding:3px 12px;border-radius:12px;font:700 12px var(--sans);color:#1b1407;background:linear-gradient(180deg,var(--gold2),var(--gold))}
+.tc h3{font:600 20px/1.2 var(--sans);margin-bottom:10px}
+.tc .pr{font:700 26px/1 var(--sans);color:var(--tx);margin-bottom:16px}
+.tc ul{flex:1;margin-bottom:18px}
+.tc li{font-size:14px;line-height:1.4;padding:7px 0 7px 24px;border:0;color:#d8d3c7}
+.tc li:before{left:2px;top:13px;width:8px;height:4px}
+.tc .btn{margin:0;padding:13px}
+.ad{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px;margin-bottom:12px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(160deg,var(--s2),var(--s1))}
+.ad b{font-weight:600}.ad span{color:var(--gold2);font-weight:700;white-space:nowrap}
+.sec{font:600 22px var(--sans);margin:4px 0 6px}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-
- /* верх главной как в референсе */
-#home .hero{padding:26px 22px 24px;border-radius:26px;border:1px solid rgba(212,175,106,.30);
-background:radial-gradient(80% 90% at 88% 22%,rgba(212,175,106,.24),transparent 62%),linear-gradient(180deg,#17171b,#0c0c0f);
-box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 22px 50px rgba(0,0,0,.55)}
-#home .hero:before{display:none}
-#home .hero .tag{background:none;border:0;padding:0;margin-bottom:14px;color:var(--gold);font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase}
-#home .hero h1{font:600 27px/1.16 var(--sans);letter-spacing:-.02em;margin-bottom:16px}
-#home .hero .rule{display:none}
-#home .hero p{margin:0;font-size:15px;line-height:1.55}
-.hero-art{float:right;width:118px;height:118px;margin:-2px -4px 10px 12px;filter:drop-shadow(0 14px 22px rgba(0,0,0,.65))}
-
 </style></head><body>
 
 <section class="page on" id="home">
  <div class="hero">
- <svg class="hero-art" viewBox="0 0 120 120" aria-hidden="true">
-  <defs>
-   <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a3326"/><stop offset="1" stop-color="#15130e"/></linearGradient>
-   <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6b5a37"/><stop offset="1" stop-color="#211c12"/></linearGradient>
-   <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1d9a0"/><stop offset=".5" stop-color="#b8924d"/><stop offset="1" stop-color="#5c4721"/></linearGradient>
-  </defs>
-  <rect x="30" y="14" width="76" height="76" rx="16" fill="url(#g1)" stroke="#d4af6a" stroke-opacity=".35"/>
-  <rect x="22" y="24" width="76" height="76" rx="16" fill="url(#g2)" stroke="#d4af6a" stroke-opacity=".5"/>
-  <rect x="14" y="34" width="76" height="76" rx="16" fill="#141417" stroke="#f1d9a0" stroke-opacity=".7"/>
-  <path d="M28 72L82 50 68 98 55 82 47 90 45 77z" fill="url(#g3)"/>
-  <path d="M45 77L82 50 55 82z" fill="#5c4721" fill-opacity=".55"/>
- </svg>
- <span class="tag">Telegram Mini App</span>
- <h1>Мини-приложение для вашего бизнеса прямо в Telegram</h1><div class="rule"></div>
- <p>Запись, каталог услуг, заявки и акции в одном месте. Клиентам ничего не нужно устанавливать, а вы получаете заявки сразу в Telegram и таблицу.</p></div>
- <button class="btn pri" data-go="packs">Посмотреть пакеты</button>
- <button class="btn" data-go="cases">Примеры работ</button>
- <button class="btn" data-go="apply">Оставить заявку</button>
+  <svg class="stripes" viewBox="0 0 400 340" preserveAspectRatio="none" aria-hidden="true">
+   <defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#d4af6a" stop-opacity="0"/><stop offset=".6" stop-color="#d4af6a" stop-opacity=".45"/><stop offset="1" stop-color="#f1d9a0" stop-opacity=".15"/></linearGradient></defs>
+   <g fill="none" stroke="url(#sg)" stroke-width="1">
+    <path d="M-10 330C110 300 220 340 410 190"/><path d="M-10 308C120 276 230 316 410 168"/>
+    <path d="M-10 286C130 254 240 292 410 146"/><path d="M-10 264C140 232 250 270 410 124"/>
+    <path d="M-10 242C150 210 260 248 410 102"/><path d="M-10 220C160 188 270 226 410 80"/>
+   </g>
+  </svg>
+  <svg class="art" viewBox="0 0 360 330" aria-hidden="true">
+   <defs>
+    <linearGradient id="a1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b3123"/><stop offset="1" stop-color="#14110b"/></linearGradient>
+    <linearGradient id="a2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7a6439"/><stop offset="1" stop-color="#241d11"/></linearGradient>
+    <linearGradient id="a3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1d1d22"/><stop offset="1" stop-color="#0b0b0e"/></linearGradient>
+    <linearGradient id="pl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6e3b0"/><stop offset=".55" stop-color="#c39a52"/><stop offset="1" stop-color="#6a5226"/></linearGradient>
+   </defs>
+   <g transform="translate(205 168) rotate(-24) skewX(-16)">
+    <g transform="translate(46 -46)"><rect x="-76" y="-76" width="152" height="152" rx="26" fill="url(#a1)" stroke="#d4af6a" stroke-opacity=".4"/></g>
+    <g transform="translate(23 -23)"><rect x="-76" y="-76" width="152" height="152" rx="26" fill="url(#a2)" stroke="#f1d9a0" stroke-opacity=".5"/></g>
+    <rect x="-70" y="-62" width="152" height="152" rx="26" fill="#070709" stroke="#d4af6a" stroke-opacity=".5"/>
+    <rect x="-76" y="-76" width="152" height="152" rx="26" fill="url(#a3)" stroke="#f1d9a0" stroke-opacity=".85" stroke-width="1.5"/>
+    <g transform="rotate(14)"><path d="M-44 6L46 -38 26 44 6 18 -8 32 -12 10z" fill="url(#pl)"/><path d="M-12 10L46 -38 -8 32z" fill="#5a4421" fill-opacity=".6"/></g>
+   </g>
+  </svg>
+  <div class="hero-in"><span class="tag">Telegram Mini App</span>
+  <h1>Мини-приложение для вашего бизнеса прямо в Telegram</h1><div class="rule"></div>
+  <p>Запись, каталог услуг, заявки и акции в одном месте. Клиентам ничего не нужно устанавливать, а вы получаете заявки сразу в Telegram и таблицу.</p></div>
+ </div>
+ <div class="wrap">
+  <h2>Пакеты</h2>
+  <div class="rail" data-rail></div>
+  <button class="btn" data-go="cases">Примеры работ</button>
+  <button class="btn" data-go="apply">Оставить заявку</button>
+ </div>
 </section>
 
 <section class="page" id="packs">
  <h2>Пакеты</h2>
- <div class="seg" id="ptabs"><button class="on" data-p="0">Старт</button><button data-p="1">Стандарт</button><button data-p="2">Про</button></div>
- <div class="card" id="pbox"></div>
- <p>Нужен второй язык, сайт или календарь записи? Это доп. услуги.</p>
- <button class="btn pri" data-go="apply">Оставить заявку</button>
+ <div class="rail" data-rail></div>
+ <h2 style="margin-top:10px">Дополнительные услуги</h2>
+ <div id="addons"></div>
+ <button class="btn pri" data-go="apply" style="margin-top:8px">Оставить заявку</button>
 </section>
 
 <section class="page" id="cases">
@@ -133,6 +165,7 @@ box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 22px 50px rgba(0,0,0,.55)}
  <button data-go="faq"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 114 2c-.9.6-1.5 1-1.5 2M12 17h.01"/></svg>Вопросы</button>
  <button data-go="apply"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Заявка</button>
 </nav>
+
 <script>
 // ====== НАСТРОЙКИ: меняйте только здесь ======
 const CFG={
@@ -141,8 +174,13 @@ const CFG={
  WA_PHONE:"37493276623",
  PACKS:[
   {n:"Старт",p:"44 000 AMD",l:["3–5 страниц","Прайс","Кнопки связи","Дизайн под ваш бренд"]},
-  {n:"Стандарт",p:"117 000 AMD",l:["Всё из «Старт»","Форма заявки с уведомлением владельцу","Заявки в Google Таблице","Каталог с фото","Баннеры с акциями"]},
+  {n:"Стандарт",hot:1,p:"117 000 AMD",l:["Всё из «Старт»","Форма заявки с уведомлением владельцу","Заявки в Google Таблице","Каталог с фото","Баннеры с акциями"]},
   {n:"Про",p:"200 000 AMD",l:["Всё из «Стандарт»","Встраивание CRM-формы","Промокоды и реферальная система","Магазин с корзиной"]}
+ ],
+ ADDONS:[
+  {n:"Второй язык",p:"по запросу"},
+  {n:"Сайт",p:"по запросу"},
+  {n:"Календарь записи",p:"по запросу"}
  ]
 };
 // =============================================
@@ -152,9 +190,11 @@ const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 function go(id){$$(".page").forEach(p=>p.classList.toggle("on",p.id===id));
  $$("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===id));scrollTo(0,0)}
 document.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)go(b.dataset.go)});
-function pack(i){const k=CFG.PACKS[i];$("#pbox").innerHTML=`<h3>${k.n}</h3><div class="price">${k.p}</div><ul>${k.l.map(x=>`<li>${x}</li>`).join("")}</ul>`;
- $$("#ptabs button").forEach((b,j)=>b.classList.toggle("on",j===i))}
-$$("#ptabs button").forEach(b=>b.onclick=()=>pack(+b.dataset.p));pack(0);
+function cards(){const h=CFG.PACKS.map((k,i)=>`<div class="tc${k.hot?" hot":""}">${k.hot?'<span class="badge">Популярный</span>':""}<h3>${k.n}</h3><div class="pr">${k.p}</div><ul>${k.l.map(x=>`<li>${x}</li>`).join("")}</ul><button class="btn${k.hot?" pri":""}" data-pick="${k.n}">Выбрать</button></div>`).join("");
+ $$("[data-rail]").forEach(r=>r.innerHTML=h);
+ $("#addons").innerHTML=CFG.ADDONS.map(a=>`<div class="ad"><b>${a.n}</b><span>${a.p}</span></div>`).join("")}
+cards();
+document.addEventListener("click",e=>{const b=e.target.closest("[data-pick]");if(b){$("#f_pack").value=b.dataset.pick;go("apply")}});
 $("#tgLink").href="https://t.me/"+CFG.TG_USER;$("#waLink").href="https://wa.me/"+CFG.WA_PHONE;
 $("#send").onclick=async()=>{
  const name=$("#f_name").value.trim(),contact=$("#f_contact").value.trim();
