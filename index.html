@@ -85,6 +85,22 @@ background:linear-gradient(170deg,#1c1c22,#0e0e12);border:1px solid var(--line)}
 .pt:last-child{border-bottom:1px solid rgba(212,175,106,.14)}
 .pt:before{content:"";position:absolute;left:6px;top:23px;width:8px;height:8px;background:linear-gradient(135deg,var(--gold2),var(--gold3));transform:rotate(45deg)}
 .pt b{color:var(--tx);font-weight:700}
+.cmp{border:1px solid var(--line);border-radius:22px;background:linear-gradient(160deg,var(--s2),var(--s1));overflow:hidden;margin-bottom:8px}
+.cmp .r{display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr;align-items:center;border-top:1px solid rgba(212,175,106,.14)}
+.cmp .r:first-child{border-top:0}
+.cmp .r>div{padding:12px 4px;font-size:13px;line-height:1.3;text-align:center}
+.cmp .r>div:first-child{text-align:left;padding-left:14px;color:var(--tx)}
+.cmp .r>div:nth-child(3){background:rgba(212,175,106,.06)}
+.cmp .h>div{font-weight:700;color:var(--gold2);padding:14px 4px}
+.cmp .y{color:var(--gold2);font-weight:700;font-size:16px}
+.cmp .n{color:var(--mut);opacity:.5}
+.steps{padding:6px 18px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(160deg,var(--s2),var(--s1));margin-bottom:8px}
+.st{display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-top:1px solid rgba(212,175,106,.14)}
+.st:first-child{border-top:0}
+.st i{flex:0 0 34px;height:34px;border-radius:50%;display:grid;place-items:center;font:700 14px var(--sans);font-style:normal;color:#1b1407;background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,var(--gold3))}
+.st p{margin:0}
+.st b{display:block;font-weight:700;color:var(--tx);margin-bottom:2px}
+.st span{display:block;color:var(--mut);font-size:14px;line-height:1.45}
 .cta{position:relative;overflow:hidden;text-align:center;margin:38px 0 8px;padding:32px 22px 24px;border-radius:26px;border:1px solid rgba(212,175,106,.38);
 background:radial-gradient(90% 110% at 50% 0%,rgba(212,175,106,.22),transparent 70%),linear-gradient(170deg,#1c1c22,#0e0e12);box-shadow:0 20px 50px rgba(0,0,0,.5)}
 .cta:before{content:"";position:absolute;left:50%;top:-90px;width:200px;height:200px;margin-left:-100px;border-radius:50%;border:1px solid var(--line);box-shadow:0 0 0 22px rgba(212,175,106,.04),0 0 0 44px rgba(212,175,106,.03)}
@@ -141,11 +157,29 @@ background:radial-gradient(90% 110% at 50% 0%,rgba(212,175,106,.22),transparent 
 </section>
 
 <section class="page" id="packs">
- <h2>Пакеты</h2>
+ <h2>Тарифы</h2>
  <div class="rail" data-rail></div>
- <h2 style="margin-top:10px">Дополнительные услуги</h2>
+
+ <h2 style="margin-top:10px">Сравнение тарифов</h2>
+ <div class="cmp" id="cmp"></div>
+
+ <h2 style="margin-top:28px">Дополнительные услуги</h2>
  <div id="addons"></div>
- <button class="btn pri" data-go="apply" style="margin-top:8px">Оставить заявку</button>
+
+ <h2 style="margin-top:28px">Как проходит разработка</h2>
+ <div class="steps">
+  <div class="st"><i>1</i><p><b>Предоплата и бриф</b><span>Вы вносите 50% и присылаете материалы: услуги, цены, контакты, логотип, фото.</span></p></div>
+  <div class="st"><i>2</i><p><b>Структура и дизайн</b><span>Продумываю структуру и делаю дизайн в стиле вашего бренда, согласуем его с вами.</span></p></div>
+  <div class="st"><i>3</i><p><b>Разработка</b><span>Собираю Mini App, подключаю форму заявки, уведомления в Telegram и Google Sheets.</span></p></div>
+  <div class="st"><i>4</i><p><b>Правки</b><span>Вы смотрите готовую версию, и мы вносим правки. До 2 кругов правок включено в цену.</span></p></div>
+  <div class="st"><i>5</i><p><b>Запуск и инструкция</b><span>Вы вносите остаток, я запускаю приложение и показываю, как менять цены и тексты.</span></p></div>
+ </div>
+
+ <div class="cta">
+  <h2 class="sh">Не уверены, какой тариф подойдёт?</h2>
+  <p>Расскажите о своём бизнесе — подберём решение под ваши задачи и бюджет.</p>
+  <button class="btn pri" data-pick="Не знаю">Обсудить проект</button>
+ </div>
 </section>
 
 <section class="page" id="cases">
@@ -197,8 +231,8 @@ const CFG={
  TG_USER:"IDanonI",
  WA_PHONE:"37493276623",
  PACKS:[
-  {n:"Старт",p:"70 000 ֏",l:["Mini App на 4 страницы","Каталог услуг","Кнопки связи","Портфолио","Уведомление владельцу в Telegram","Дизайн под бренд"]},
-  {n:"Стандарт",hot:1,p:"150 000 ֏",l:["Всё из «Старта», плюс:","+3 страницы Mini App","Форма заявки","Уведомление клиенту в Telegram","Сохранение заявок в Google Sheets","Баннеры с акциями"]},
+  {n:"Старт",p:"70 000 ֏",l:["Mini App на 4 страницы","Каталог услуг","Кнопки связи","Портфолио","Форма заявки","Уведомление владельцу в Telegram о новой заявке","Дизайн под бренд"]},
+  {n:"Стандарт",hot:1,p:"150 000 ֏",l:["Всё из «Старта», плюс:","+3 страницы Mini App","Уведомление владельцу с кнопкой «Подтвердить запись»","Клиент получает сообщение, что запись подтверждена, с датой и временем","Сохранение заявок в Google Sheets","Баннеры с акциями"]},
   {n:"Про",p:"250 000 ֏",l:["Всё из «Стандарта», плюс:","+5 страниц Mini App","Встраивание готовой CRM-формы через виджет или HTML-код","Блок акций и специальных предложений — владелец может менять текст акции и срок её действия через предусмотренный механизм управления","Раздел отзывы","Удобная навигация и персонализированный интерфейс — адаптация под фирменный стиль заказчика и мобильный экран","Интеграция вашей платёжной системы","Интеграция карты с адресом"]}
  ],
  ADDONS:[
@@ -207,6 +241,26 @@ const CFG={
   {n:"Интеграция CRM-формы",d:"Встраивание готовой формы CRM в Mini App, проверка отображения и отправки заявок",p:"15 000 ֏"},
   {n:"Календарь записи со свободными слотами",d:"Выбор даты и доступного времени, получение актуальных свободных слотов, передача записи в систему",p:"200 000 ֏"},
   {n:"Интеграция карты",d:"Карта с отметкой адреса компании, расположением филиалов или объектов и переходом к маршруту",p:"20 000 ֏"}
+ ],
+ // 1 = галочка, 0 = прочерк, строка = выводится как есть
+ CMP:[
+  ["Страниц Mini App","4","7","12"],
+  ["Каталог услуг",1,1,1],
+  ["Кнопки связи",1,1,1],
+  ["Портфолио",1,1,1],
+  ["Дизайн под бренд",1,1,1],
+  ["Форма заявки",1,1,1],
+  ["Уведомление владельцу о новой заявке",1,1,1],
+  ["Подтверждение записи кнопкой в Telegram",0,1,1],
+  ["Сообщение клиенту о подтверждённой записи",0,1,1],
+  ["Заявки в Google Sheets",0,1,1],
+  ["Баннеры с акциями",0,1,1],
+  ["Блок акций с управлением",0,0,1],
+  ["CRM-форма",0,0,1],
+  ["Раздел отзывы",0,0,1],
+  ["Персонализированный интерфейс",0,0,1],
+  ["Ваша платёжная система",0,0,1],
+  ["Карта с адресом",0,0,1]
  ]
 };
 // =============================================
@@ -227,7 +281,9 @@ function go(id){$$(".page").forEach(p=>p.classList.toggle("on",p.id===id));
 document.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)go(b.dataset.go)});
 function cards(){const h=CFG.PACKS.map(k=>`<div class="tc${k.hot?" hot":""}">${k.hot?'<span class="badge">Популярный</span>':""}<h3>${k.n}</h3><div class="pr">${k.p}</div><ul>${k.l.map(x=>`<li>${x}</li>`).join("")}</ul><button class="btn${k.hot?" pri":""}" data-pick="${k.n}">Выбрать</button></div>`).join("");
  $$("[data-rail]").forEach(r=>r.innerHTML=h);
- $("#addons").innerHTML=CFG.ADDONS.map(a=>`<div class="ad"><div><b>${a.n}</b><em>${a.d}</em></div><span>${a.p}</span></div>`).join("")}
+ $("#addons").innerHTML=CFG.ADDONS.map(a=>`<div class="ad"><div><b>${a.n}</b><em>${a.d}</em></div><span>${a.p}</span></div>`).join("");
+ $("#cmp").innerHTML='<div class="r h"><div></div><div>Старт</div><div>Стандарт</div><div>Про</div></div>'+
+  CFG.CMP.map(r=>`<div class="r"><div>${r[0]}</div>${r.slice(1).map(v=>v===1?'<div class="y">✓</div>':v===0?'<div class="n">—</div>':`<div>${v}</div>`).join("")}</div>`).join("")}
 cards();center();addEventListener("load",center);
 // перетаскивание тарифов мышкой на компьютере
 $$("[data-rail]").forEach(r=>{let down=false,moved=false,sx=0,sl=0;
