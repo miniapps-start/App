@@ -8,7 +8,9 @@
 <style>
 :root{--bg:#09090b;--s1:#121216;--s2:#1a1a20;--line:rgba(212,175,106,.22);--tx:#f3efe6;--mut:#a29f96;--gold:#d4af6a;--gold2:#f1d9a0;--gold3:#9c7a3c;
 --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--sans:"Manrope",-apple-system,"Segoe UI",Roboto,sans-serif}
-*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+input,textarea{-webkit-user-select:text;user-select:text}
+img{-webkit-user-drag:none;user-drag:none;pointer-events:none}
 html,body{height:100%;overflow:hidden;overscroll-behavior:none;background:var(--bg)}
 body{font:400 16px/1.6 var(--sans);color:var(--tx);
 background-image:radial-gradient(60% 40% at 100% 0%,rgba(212,175,106,.16),transparent 70%),radial-gradient(70% 45% at 0% 100%,rgba(212,175,106,.12),transparent 70%)}
@@ -46,7 +48,8 @@ nav button.on{color:var(--gold2);background:rgba(212,175,106,.12)}
 .page#home{padding:0}.wrap{padding:0 20px}
 .hero{margin:0 0 24px;line-height:0}
 .hero img{display:block;width:100%;height:auto}
-.rail{position:relative;display:flex;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;margin:0 -20px 18px;padding:16px 20px 8px;scrollbar-width:none}
+.rail{position:relative;display:flex;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;margin:0 -20px 18px;padding:16px 20px 8px;scrollbar-width:none;cursor:grab}
+.rail.drag{cursor:grabbing;scroll-snap-type:none}
 .rail::-webkit-scrollbar{display:none}
 .tc{position:relative;flex:0 0 74%;max-width:290px;scroll-snap-align:center;display:flex;flex-direction:column;border-radius:22px;padding:22px 18px 18px;
 background:linear-gradient(170deg,#1c1c22,#0e0e12);border:1px solid var(--line)}
@@ -58,10 +61,9 @@ background:linear-gradient(170deg,#1c1c22,#0e0e12);border:1px solid var(--line)}
 .tc li{font-size:14px;line-height:1.4;padding:7px 0 7px 24px;color:#d8d3c7}
 .tc li:before{left:2px;top:13px;width:8px;height:4px}
 .tc .btn{margin:0;padding:13px}
-.ad{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px;margin-bottom:12px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(160deg,var(--s2),var(--s1))}
-.ad b{flex:1;font-weight:600}.ad span{color:var(--gold2);font-weight:700;text-align:right}
-.gt{font:600 20px/1.2 var(--sans);margin:26px 0 6px}
-.gn{margin:0 0 12px;font-size:14px}
+.ad{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px 20px;margin-bottom:12px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(160deg,var(--s2),var(--s1))}
+.ad div{flex:1}.ad b{display:block;font-weight:600}.ad em{display:block;font-style:normal;color:var(--mut);font-size:13px;line-height:1.45;margin-top:4px}
+.ad span{color:var(--gold2);font-weight:700;text-align:right;white-space:nowrap}
 .sh{font:600 28px/1.15 var(--serif);margin:36px 0 16px}
 .adv{padding:6px 18px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(160deg,var(--s2),var(--s1))}
 .adv>div{display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-top:1px solid rgba(212,175,106,.14)}
@@ -90,7 +92,7 @@ background:radial-gradient(90% 110% at 50% 0%,rgba(212,175,106,.22),transparent 
 <div id="scroll">
 
 <section class="page on" id="home">
- <div class="hero"><img src="заглавная.png" alt="Мини-приложения для бизнеса"></div>
+ <div class="hero"><img src="заглавная.png" alt="Мини-приложения для бизнеса" draggable="false"></div>
  <div class="wrap">
   <h2>Пакеты</h2>
   <div class="rail" data-rail></div>
@@ -179,28 +181,16 @@ const CFG={
  TG_USER:"IDanonI",
  WA_PHONE:"37493276623",
  PACKS:[
-  {n:"Старт",p:"50 000 AMD",l:["3–5 страниц","Прайс","Кнопки связи","Дизайн под ваш бренд"]},
-  {n:"Стандарт",hot:1,p:"120 000 AMD",l:["Всё из «Старт»","Форма заявки с уведомлением владельцу","Заявки в Google Таблице","Каталог с фото","Баннеры с акциями"]},
-  {n:"Про",p:"200 000 AMD",l:["Всё из «Стандарт»","Встраивание CRM-формы","Промокоды и реферальная система","Магазин с корзиной"]}
+  {n:"Старт",p:"70 000 ֏",l:["Mini App на 5 страниц","Каталог услуг","Кнопки связи","Портфолио","Дизайн под бренд"]},
+  {n:"Стандарт",hot:1,p:"150 000 ֏",l:["Всё из «Старта», плюс:","+3 страницы Mini App","Форма заявки","Уведомление владельцу в Telegram","Сохранение заявок в Google Sheets","Баннеры с акциями"]},
+  {n:"Про",p:"250 000 ֏",l:["Всё из «Стандарта», плюс:","+5 страниц Mini App","Встраивание готовой CRM-формы через виджет или HTML-код","Блок акций и специальных предложений — владелец может менять текст акции и срок её действия через предусмотренный механизм управления","Раздел отзывы","Удобная навигация и персонализированный интерфейс — адаптация под фирменный стиль заказчика и мобильный экран","Интеграция вашей платёжной системы","Интеграция карты с адресом"]}
  ],
  ADDONS:[
-  {t:"Дополнительные опции",note:"Добавляются к любому пакету.",items:[
-   {n:"Дополнительный язык (перевод и настройка)",p:"+15 000 AMD"},
-   {n:"Дополнительная страница",p:"+5 500 AMD"},
-   {n:"Подключение CRM (Битрикс24, amoCRM)",p:"+44 000 AMD"},
-   {n:"Промокоды и реферальная система",p:"+29 000 AMD"},
-   {n:"Магазин с корзиной (оплата на месте или переводом)",p:"+73 000 AMD"},
-   {n:"Календарь записи с выбором свободных слотов",p:"от 180 000 AMD"},
-   {n:"Онлайн-оплата картой внутри приложения",p:"по запросу"}
-  ]},
-  {t:"Сайт как дополнительная услуга",items:[
-   {n:"Лендинг (одна страница)",p:"80 000 AMD"},
-   {n:"Сайт до 5–7 страниц",p:"165 000 AMD"},
-   {n:"Сайт + мини-приложение одним заказом",p:"выгода 22 000 AMD"}
-  ]},
-  {t:"Поддержка",items:[
-   {n:"Обновление цен и текстов, мелкие правки, помощь по работе приложения",p:"11 000 AMD / мес"}
-  ]}
+  {n:"Дополнительный язык",d:"Перевод интерфейса и контента, переключение языка, адаптация всех экранов",p:"20 000 ֏"},
+  {n:"Дополнительная страница",d:"Отдельный экран Mini App с дизайном и адаптацией под существующий стиль",p:"10 000 ֏"},
+  {n:"Интеграция CRM-формы",d:"Встраивание готовой формы CRM в Mini App, проверка отображения и отправки заявок",p:"15 000 ֏"},
+  {n:"Календарь записи со свободными слотами",d:"Выбор даты и доступного времени, получение актуальных свободных слотов, передача записи в систему",p:"200 000 ֏"},
+  {n:"Интеграция карты",d:"Карта с отметкой адреса компании, расположением филиалов или объектов и переходом к маршруту",p:"20 000 ֏"}
  ]
 };
 // =============================================
@@ -209,6 +199,11 @@ if(tg){tg.ready();tg.expand();
  try{tg.setHeaderColor("#09090b");tg.setBackgroundColor("#09090b")}catch(e){}
  try{tg.disableVerticalSwipes()}catch(e){}}
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const editable=t=>t&&t.closest&&t.closest("input,textarea");
+// запрет контекстного меню, выделения и перетаскивания
+document.addEventListener("contextmenu",e=>e.preventDefault());
+document.addEventListener("selectstart",e=>{if(!editable(e.target))e.preventDefault()});
+document.addEventListener("dragstart",e=>e.preventDefault());
 function center(){requestAnimationFrame(()=>$$("[data-rail]").forEach(r=>{const h=r.querySelector(".hot");
  if(h&&r.clientWidth)r.scrollLeft=h.offsetLeft-(r.clientWidth-h.offsetWidth)/2}))}
 function go(id){$$(".page").forEach(p=>p.classList.toggle("on",p.id===id));
@@ -216,8 +211,17 @@ function go(id){$$(".page").forEach(p=>p.classList.toggle("on",p.id===id));
 document.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)go(b.dataset.go)});
 function cards(){const h=CFG.PACKS.map(k=>`<div class="tc${k.hot?" hot":""}">${k.hot?'<span class="badge">Популярный</span>':""}<h3>${k.n}</h3><div class="pr">${k.p}</div><ul>${k.l.map(x=>`<li>${x}</li>`).join("")}</ul><button class="btn${k.hot?" pri":""}" data-pick="${k.n}">Выбрать</button></div>`).join("");
  $$("[data-rail]").forEach(r=>r.innerHTML=h);
- $("#addons").innerHTML=CFG.ADDONS.map(g=>`<h3 class="gt">${g.t}</h3>${g.note?`<p class="gn">${g.note}</p>`:""}${g.items.map(a=>`<div class="ad"><b>${a.n}</b><span>${a.p}</span></div>`).join("")}`).join("")}
+ $("#addons").innerHTML=CFG.ADDONS.map(a=>`<div class="ad"><div><b>${a.n}</b><em>${a.d}</em></div><span>${a.p}</span></div>`).join("")}
 cards();center();addEventListener("load",center);
+// перетаскивание тарифов мышкой на компьютере
+$$("[data-rail]").forEach(r=>{let down=false,moved=false,sx=0,sl=0;
+ r.addEventListener("mousedown",e=>{if(e.button!==0)return;down=true;moved=false;sx=e.clientX;sl=r.scrollLeft});
+ addEventListener("mousemove",e=>{if(!down)return;const dx=e.clientX-sx;
+  if(!moved&&Math.abs(dx)>5){moved=true;r.classList.add("drag")}
+  if(moved){r.scrollLeft=sl-dx;e.preventDefault()}});
+ addEventListener("mouseup",()=>{if(!down)return;down=false;r.classList.remove("drag");setTimeout(()=>moved=false,0)});
+ r.addEventListener("click",e=>{if(moved){e.stopPropagation();e.preventDefault()}},true);
+});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-pick]");if(b){$("#f_pack").value=b.dataset.pick;go("apply")}});
 $("#tgLink").href="https://t.me/"+CFG.TG_USER;$("#waLink").href="https://wa.me/"+CFG.WA_PHONE;
 $("#send").onclick=async()=>{
