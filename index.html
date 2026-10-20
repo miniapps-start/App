@@ -147,7 +147,7 @@ const CFG={
 };
 // =============================================
 const tg=window.Telegram&&Telegram.WebApp;
-if(tg){tg.ready();tg.expand();try{tg.setHeaderColor("#09090b");tg.setBackgroundColor("#09090b)}catch(e){}}
+if(tg){tg.ready();tg.expand();try{tg.setHeaderColor("#09090b");tg.setBackgroundColor("#09090b")}catch(e){}}
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 function go(id){$$(".page").forEach(p=>p.classList.toggle("on",p.id===id));
  $$("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===id));scrollTo(0,0)}
