@@ -267,6 +267,7 @@ const CFG={
 const tg=window.Telegram&&Telegram.WebApp;
 if(tg){tg.ready();tg.expand();
  try{tg.setHeaderColor("#09090b");tg.setBackgroundColor("#09090b")}catch(e){}
+ try{tg.setBottomBarColor("#09090b")}catch(e){}
  try{tg.disableVerticalSwipes()}catch(e){}}
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const editable=t=>t&&t.closest&&t.closest("input,textarea");
