@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Демо «Стандарт» — Мастер рядом</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+/* ===== Фирменные цвета демо-сервиса ===== */
+:root{--bg:#f2f3f5;--card:#fff;--ink:#1d232b;--mut:#6b7380;--line:#e1e4e9;--acc:#ff7a1a;--dark:#1d232b;--ok:#2e9e5b;--no:#c0392b;
+--disp:"Oswald","Arial Narrow",sans-serif;--sans:"Golos Text",-apple-system,"Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg)}
+body{font:400 15px/1.5 var(--sans);color:var(--ink);overflow:hidden}
+#app{position:fixed;inset:0;overflow-y:auto;overflow-x:hidden;padding-bottom:96px}
+.demo{position:sticky;top:0;z-index:9;display:flex;align-items:center;gap:10px;padding:9px 14px;background:#111;color:#f1d9a0;font:600 12px/1.3 var(--sans)}
+.demo a{color:#f1d9a0;text-decoration:none;border:1px solid rgba(241,217,160,.4);border-radius:10px;padding:5px 9px;white-space:nowrap}
+.demo span{flex:1;opacity:.85}
+.mode{display:flex;gap:6px;max-width:480px;margin:12px auto 0;padding:0 18px}
+.mode button{flex:1;border:1px solid var(--line);background:#fff;color:var(--mut);border-radius:12px;padding:9px;font:600 13px var(--sans);cursor:pointer}
+.mode button.on{background:var(--dark);color:#fff;border-color:var(--dark)}
+.wrap{max-width:480px;margin:auto;padding:0 18px}
+.page{display:none;padding:18px 0}.page.on{display:block;animation:in .3s ease}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h1{font:600 34px/1.05 var(--disp);text-transform:uppercase;letter-spacing:.01em}
+h2{font:600 24px/1.1 var(--disp);text-transform:uppercase;margin:4px 0 14px}
+p{color:var(--mut)}
+.hero{background:var(--dark);color:#fff;border-radius:22px;padding:24px 20px;margin-bottom:14px}
+.hero p{color:#b8c0cc;margin:8px 0 0}
+.banner{display:flex;gap:12px;align-items:center;background:var(--acc);color:#fff;border-radius:18px;padding:14px 16px;margin-bottom:14px}
+.banner b{font:600 20px var(--disp);text-transform:uppercase}.banner small{display:block;opacity:.9}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;border:0;border-radius:14px;padding:15px;font:700 15px var(--sans);cursor:pointer;background:var(--acc);color:#fff;margin-top:14px}
+.btn.dark{background:var(--dark)}.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;cursor:pointer}
+.tile b{display:block;font:600 16px var(--disp);text-transform:uppercase}.tile small{color:var(--mut)}
+.svc{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px 14px;margin-bottom:8px}
+.svc div{flex:1;min-width:0}.svc small{color:var(--mut);display:block}
+.svc em{font-style:normal;font-weight:700;white-space:nowrap}
+.cat{font:600 14px var(--disp);text-transform:uppercase;color:var(--mut);margin:16px 0 8px;letter-spacing:.04em}
+label{display:block;font:600 13px var(--sans);color:var(--mut);margin:14px 0 6px}
+input,select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink);font:15px var(--sans);outline:0}
+input:focus,select:focus,textarea:focus{border-color:var(--acc)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{margin:0;display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 11px;color:var(--ink);font-weight:500;cursor:pointer}
+.chips input{width:auto}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.err{color:var(--no);font-size:13px;min-height:18px;margin-top:8px}
+/* telegram-подобные карточки */
+.tgc{background:#17212b;color:#e9edf1;border-radius:18px;padding:14px;margin:10px 0}
+.tgc .who{font:600 12px var(--sans);color:#6ab3f3;margin-bottom:6px}
+.tgc .msg{background:#182533;border-radius:14px 14px 14px 4px;padding:11px 13px;line-height:1.5;font-size:14px}
+.tgc .kb{display:grid;gap:6px;margin-top:6px}
+.tgc .kb button{border:0;border-radius:10px;padding:10px;background:#2b5278;color:#fff;font:600 13px var(--sans);cursor:pointer}
+.sheet{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;margin:10px 0}
+.sheet .acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.sheet .acts button{border:0;border-radius:12px;padding:12px;color:#fff;font:700 14px var(--sans);cursor:pointer}
+.hint{font-size:12px;color:var(--mut);margin-top:6px}
+.empty{background:#fff;border:1px dashed var(--line);border-radius:16px;padding:18px;text-align:center;color:var(--mut)}
+/* база заявок */
+.tbl{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:16px}
+table{border-collapse:collapse;width:100%;min-width:460px;font-size:13px}
+th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{font-weight:700;color:var(--mut);background:#f8f9fb}
+.st{display:inline-block;border-radius:8px;padding:2px 8px;font-weight:600;font-size:12px}
+.st.new{background:#fff1e6;color:#c25a00}.st.ok{background:#e6f5ec;color:var(--ok)}.st.no{background:#fbe9e7;color:var(--no)}
+/* календарь */
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.day{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px 4px;min-height:86px;font-size:11px}
+.day b{display:block;font-size:12px;margin-bottom:4px}
+.ev{background:#fff1e6;color:#a34a00;border-radius:6px;padding:2px 4px;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ev.ok{background:#e6f5ec;color:#1f7a45}
+/* статистика */
+.kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.kpi div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}
+.kpi b{display:block;font:600 22px var(--disp)}.kpi small{color:var(--mut);font-size:12px}
+.bars{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}
+.bar{display:flex;align-items:center;gap:8px;margin:7px 0;font-size:13px}
+.bar span{width:110px;flex:0 0 110px;color:var(--mut)}
+.bar i{display:block;height:10px;border-radius:5px;background:var(--acc)}
+.bar em{font-style:normal;font-weight:600;font-size:12px}
+nav{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));max-width:480px;margin:auto;display:flex;padding:6px;background:rgba(29,35,43,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:20px;z-index:8}
+nav button{flex:1;border:0;background:none;color:#9aa3af;font:600 11px var(--sans);padding:8px 2px;border-radius:14px;cursor:pointer}
+nav button.on{background:rgba(255,122,26,.18);color:var(--acc)}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style></head><body>
+<div id="app">
+ <div class="demo"><a href="index.html#cases">← Назад</a><span>Демо «Стандарт» · заявки никуда не отправляются</span></div>
+ <div class="mode"><button class="on" data-mode="client">Глазами клиента</button><button data-mode="owner">Глазами мастера</button></div>
+ <div class="wrap">
+
+ <!-- ===== КЛИЕНТ ===== -->
+ <section class="page on" id="home">
+  <div class="banner"><div><b>−15% на сборку мебели</b><small>до конца месяца · баннер акции</small></div></div>
+  <div class="hero">
+   <h1>Мастер рядом</h1>
+   <p>Сантехника, электрика, сборка мебели и мелкий ремонт в Ереване. Выезд от 1 часа, весь инструмент с собой.</p>
+   <button class="btn" data-go="apply">Вызвать мастера</button>
+  </div>
+  <div class="grid">
+   <div class="tile" data-go="services"><b>Сантехника</b><small>смесители, протечки</small></div>
+   <div class="tile" data-go="services"><b>Электрика</b><small>розетки, люстры</small></div>
+   <div class="tile" data-go="services"><b>Мебель</b><small>сборка любой</small></div>
+   <div class="tile" data-go="services"><b>Монтаж</b><small>ТВ, полки, карнизы</small></div>
+  </div>
+ </section>
+
+ <section class="page" id="services">
+  <h2>Услуги и цены</h2>
+  <div id="svcList"></div>
+ </section>
+
+ <section class="page" id="apply">
+  <div id="formBox">
+   <h2>Вызов мастера</h2>
+   <label>Что нужно сделать</label>
+   <div class="chips" id="svcChips"></div>
+   <label for="f_name">Имя</label><input id="f_name" placeholder="Арам">
+   <label for="f_addr">Адрес</label><input id="f_addr" placeholder="ул. Комитаса, 5">
+   <div class="two">
+    <div><label for="f_date">Дата</label><input id="f_date" type="date"></div>
+    <div><label for="f_time">Время</label><input id="f_time" type="time" value="11:00"></div>
+   </div>
+   <button class="btn" id="send">Отправить заявку</button>
+   <div class="err" id="err"></div>
+   <p class="hint">В «Стандарте» свободные слоты не показываются: мастер проверяет время и подтверждает запись сам.</p>
+  </div>
+  <div id="done" hidden>
+   <h2>Заявка отправлена</h2>
+   <p>Мастер подтвердит время, и бот пришлёт вам сообщение.</p>
+   <div class="tgc" id="clientMsg" hidden><div class="who">Бот «Мастер рядом»</div><div class="msg" id="clientMsgText"></div></div>
+   <button class="btn dark" data-mode="owner">Посмотреть, что получил мастер →</button>
+   <button class="btn ghost" id="again">Новая заявка</button>
+  </div>
+ </section>
+
+ <section class="page" id="contacts">
+  <h2>Контакты</h2>
+  <div class="svc"><div><b>Telegram</b><small>написать в бот</small></div></div>
+  <div class="svc"><div><b>WhatsApp</b><small>+374 …</small></div></div>
+  <div class="svc"><div><b>Без выходных</b><small>с 8:00 до 22:00</small></div></div>
+ </section>
+
+ <!-- ===== МАСТЕР ===== -->
+ <section class="page" id="inbox">
+  <h2>Уведомления</h2>
+  <div id="inboxList"><div class="empty">Новых заявок нет. Оставьте заявку «глазами клиента».</div></div>
+  <div id="confirmBox" hidden>
+   <div class="sheet">
+    <b>Заявка</b>
+    <div id="confirmText" style="margin-top:8px;line-height:1.6"></div>
+    <div class="acts"><button style="background:var(--ok)" id="btnOk">Подтвердить</button><button style="background:var(--no)" id="btnNo">Отменить</button></div>
+   </div>
+   <p class="hint">Это страница подтверждения, которая открывается по кнопке из уведомления.</p>
+  </div>
+ </section>
+
+ <section class="page" id="base">
+  <h2>База заявок</h2>
+  <div class="tbl"><table><thead><tr><th>Клиент</th><th>Услуги</th><th>Дата</th><th>Время</th><th>Статус</th></tr></thead><tbody id="rows"></tbody></table></div>
+  <h2 style="margin-top:20px">Календарь записей</h2>
+  <div class="cal" id="cal"></div>
+ </section>
+
+ <section class="page" id="stats">
+  <h2>Статистика бота</h2>
+  <div class="kpi"><div><b>214</b><small>пользователей</small></div><div><b>+37</b><small>за неделю</small></div><div><b>58%</b><small>активных</small></div></div>
+  <div class="bars" id="bars"></div>
+  <p class="hint">Какие страницы и команды открывали пользователи за 30 дней.</p>
+ </section>
+
+ </div>
+</div>
+
+<nav id="navClient">
+ <button class="on" data-go="home">Главная</button>
+ <button data-go="services">Услуги</button>
+ <button data-go="apply">Заявка</button>
+ <button data-go="contacts">Контакты</button>
+</nav>
+<nav id="navOwner" hidden>
+ <button data-go="inbox">Уведомления</button>
+ <button data-go="base">База</button>
+ <button data-go="stats">Статистика</button>
+</nav>
+
+<script>
+// ===== Данные демо =====
+const SERVICES=[
+ {cat:"Сантехника",items:[["Замена смесителя","от 5 000 ֏"],["Устранение протечки","от 4 000 ֏"],["Установка унитаза","от 12 000 ֏"]]},
+ {cat:"Электрика",items:[["Установка розетки","от 3 000 ֏"],["Подключение люстры","от 6 000 ֏"]]},
+ {cat:"Мебель и монтаж",items:[["Сборка шкафа","от 10 000 ֏"],["Навеска телевизора","от 8 000 ֏"],["Монтаж карниза","от 4 000 ֏"]]}
+];
+const pad=n=>("0"+n).slice(-2);
+const iso=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const ru=s=>{const[y,m,d]=s.split("-");return d+"."+m+"."+y.slice(2)};
+const day=k=>{const d=new Date();d.setDate(d.getDate()+k);return iso(d)};
+// заявки, которые уже есть в базе
+const ROWS=[
+ {n:"Гаяне",s:"Подключение люстры",d:day(0),t:"10:00",st:"ok"},
+ {n:"Давид",s:"Сборка шкафа",d:day(1),t:"12:00",st:"ok"},
+ {n:"Мариам",s:"Замена смесителя",d:day(2),t:"09:30",st:"new"},
+ {n:"Артур",s:"Навеска телевизора",d:day(4),t:"17:00",st:"ok"}
+];
+const STATS=[["Главная",100],["Услуги",72],["Заявка",41],["Акции",33],["Контакты",18]];
+
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const tg=window.Telegram&&Telegram.WebApp;
+if(tg){tg.ready();tg.expand();try{tg.BackButton.show();tg.BackButton.onClick(()=>location.href="index.html#cases")}catch(e){}}
+
+$("#svcList").innerHTML=SERVICES.map(g=>`<div class="cat">${g.cat}</div>`+g.items.map(i=>`<div class="svc"><div><b>${i[0]}</b></div><em>${i[1]}</em></div>`).join("")).join("");
+$("#svcChips").innerHTML=SERVICES.flatMap(g=>g.items).map(i=>`<label><input type="checkbox" value="${i[0]}">${i[0]}</label>`).join("");
+$("#f_date").value=day(1);
+$("#bars").innerHTML=STATS.map(s=>`<div class="bar"><span>${s[0]}</span><i style="width:${s[1]*1.6}px"></i><em>${s[1]}%</em></div>`).join("");
+
+let mode="client",pending=null;
+function go(id){$$(".page").forEach(p=>p.classList.toggle("on",p.id===id));
+ $$("nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===id));$("#app").scrollTo(0,0)}
+function setMode(m){mode=m;$$(".mode button").forEach(b=>b.classList.toggle("on",b.dataset.mode===m));
+ $("#navClient").hidden=m!=="client";$("#navOwner").hidden=m!=="owner";go(m==="client"?"home":"inbox")}
+document.addEventListener("click",e=>{
+ const g=e.target.closest("[data-go]");if(g)go(g.dataset.go);
+ const m=e.target.closest("[data-mode]");if(m)setMode(m.dataset.mode);
+});
+
+function renderBase(){
+ const lbl={new:"Новая",ok:"Подтверждена",no:"Отменена"};
+ $("#rows").innerHTML=ROWS.slice().sort((a,b)=>(a.d+a.t).localeCompare(b.d+b.t)).map(r=>`<tr><td>${r.n}</td><td>${r.s}</td><td>${ru(r.d)}</td><td>${r.t}</td><td><span class="st ${r.st}">${lbl[r.st]}</span></td></tr>`).join("");
+ const names=["Вс","Пн","Вт","Ср","Чт","Пт","Сб"];
+ $("#cal").innerHTML=[0,1,2,3,4,5,6].map(k=>{const d=day(k),dt=new Date(d+"T12:00");
+  const ev=ROWS.filter(r=>r.d===d&&r.st!=="no").map(r=>`<div class="ev ${r.st==="ok"?"ok":""}">${r.t} ${r.n}</div>`).join("");
+  return `<div class="day"><b>${names[dt.getDay()]} ${dt.getDate()}</b>${ev}</div>`}).join("");
+}
+renderBase();
+
+// клиент отправляет заявку
+$("#send").onclick=()=>{
+ const svc=$$("#svcChips input:checked").map(i=>i.value),n=$("#f_name").value.trim();
+ if(!svc.length||!n){$("#err").textContent="Выберите услугу и укажите имя";return}
+ $("#err").textContent="";
+ pending={n,s:svc.join(", "),d:$("#f_date").value,t:$("#f_time").value,st:"new"};
+ ROWS.push(pending);renderBase();
+ $("#inboxList").innerHTML=`<div class="tgc"><div class="who">Бот «Мастер рядом»</div><div class="msg">🆕 <b>Новая заявка</b><br>Услуги: ${pending.s}<br>Дата: ${ru(pending.d)}<br>Время: ${pending.t}</div>
+  <div class="kb"><button id="openConfirm">✅ Подтвердить</button><button data-go="base">📋 Открыть таблицу</button></div></div>`;
+ $("#confirmBox").hidden=true;$("#clientMsg").hidden=true;
+ $("#formBox").hidden=true;$("#done").hidden=false;
+ if(tg&&tg.HapticFeedback)tg.HapticFeedback.notificationOccurred("success");
+};
+$("#again").onclick=()=>{$("#formBox").hidden=false;$("#done").hidden=true};
+
+// мастер открывает страницу подтверждения
+document.addEventListener("click",e=>{if(!e.target.closest("#openConfirm")||!pending)return;
+ $("#confirmText").innerHTML=`Клиент: ${pending.n}<br>Услуги: ${pending.s}<br>Дата: ${ru(pending.d)}<br>Время: ${pending.t}`;
+ $("#confirmBox").hidden=false;$("#btnOk").disabled=$("#btnNo").disabled=false;
+});
+function decide(ok){if(!pending)return;
+ pending.st=ok?"ok":"no";renderBase();
+ $("#clientMsgText").innerHTML=ok?`✅ <b>Ваша запись подтверждена</b><br>Услуги: ${pending.s}<br>Дата: ${ru(pending.d)}<br>Время: ${pending.t}<br>Ждём вас!`
+  :`❌ К сожалению, запись на ${ru(pending.d)} в ${pending.t} отменена.<br>Выберите другое время в приложении.`;
+ $("#clientMsg").hidden=false;
+ $("#confirmText").innerHTML+=`<p class="hint" style="margin-top:10px">${ok?"Подтверждено ✅":"Отменено ❌"} Клиент получил сообщение — переключитесь на «Глазами клиента».</p>`;
+ $("#btnOk").disabled=$("#btnNo").disabled=true;
+}
+$("#btnOk").onclick=()=>decide(true);$("#btnNo").onclick=()=>decide(false);
+// после решения мастера клиент видит сообщение на экране «Заявка отправлена»
+document.querySelector('.mode [data-mode="client"]').addEventListener("click",()=>{if(pending&&pending.st!=="new")setTimeout(()=>go("apply"),0)});
+</script>
+</body></html>
