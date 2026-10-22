@@ -17,9 +17,6 @@ body{font:400 15px/1.5 var(--sans);color:var(--ink);overflow:hidden}
 .demo{position:sticky;top:0;z-index:9;display:flex;align-items:center;gap:10px;padding:9px 14px;background:#111;color:#f1d9a0;font:600 12px/1.3 var(--sans)}
 .demo a{color:#f1d9a0;text-decoration:none;border:1px solid rgba(241,217,160,.4);border-radius:10px;padding:5px 9px;white-space:nowrap}
 .demo span{flex:1;opacity:.85}
-.mode{display:flex;gap:6px;max-width:480px;margin:12px auto 0;padding:0 18px}
-.mode button{flex:1;border:1px solid var(--line);background:#fff;color:var(--mut);border-radius:12px;padding:9px;font:600 13px var(--sans);cursor:pointer}
-.mode button.on{background:var(--dark);color:#fff;border-color:var(--dark)}
 .wrap{max-width:480px;margin:auto;padding:0 18px}
 .page{display:none;padding:18px 0}.page.on{display:block;animation:in .3s ease}
 @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -58,28 +55,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .sheet .acts button{border:0;border-radius:12px;padding:12px;color:#fff;font:700 14px var(--sans);cursor:pointer}
 .hint{font-size:12px;color:var(--mut);margin-top:6px}
 .empty{background:#fff;border:1px dashed var(--line);border-radius:16px;padding:18px;text-align:center;color:var(--mut)}
-/* база заявок */
-.tbl{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:16px}
-table{border-collapse:collapse;width:100%;min-width:460px;font-size:13px}
-th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
-th{font-weight:700;color:var(--mut);background:#f8f9fb}
-.st{display:inline-block;border-radius:8px;padding:2px 8px;font-weight:600;font-size:12px}
-.st.new{background:#fff1e6;color:#c25a00}.st.ok{background:#e6f5ec;color:var(--ok)}.st.no{background:#fbe9e7;color:var(--no)}
-/* календарь */
-.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
-.day{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px 4px;min-height:86px;font-size:11px}
-.day b{display:block;font-size:12px;margin-bottom:4px}
-.ev{background:#fff1e6;color:#a34a00;border-radius:6px;padding:2px 4px;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ev.ok{background:#e6f5ec;color:#1f7a45}
-/* статистика */
-.kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
-.kpi div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}
-.kpi b{display:block;font:600 22px var(--disp)}.kpi small{color:var(--mut);font-size:12px}
-.bars{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}
-.bar{display:flex;align-items:center;gap:8px;margin:7px 0;font-size:13px}
-.bar span{width:110px;flex:0 0 110px;color:var(--mut)}
-.bar i{display:block;height:10px;border-radius:5px;background:var(--acc)}
-.bar em{font-style:normal;font-weight:600;font-size:12px}
+.step{font:600 12px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--acc);margin:18px 0 4px}
 nav{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));max-width:480px;margin:auto;display:flex;padding:6px;background:rgba(29,35,43,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:20px;z-index:8}
 nav button{flex:1;border:0;background:none;color:#9aa3af;font:600 11px var(--sans);padding:8px 2px;border-radius:14px;cursor:pointer}
 nav button.on{background:rgba(255,122,26,.18);color:var(--acc)}
@@ -88,10 +64,8 @@ nav button.on{background:rgba(255,122,26,.18);color:var(--acc)}
 </style></head><body>
 <div id="app">
  <div class="demo"><a href="index.html#cases">← Назад</a><span>Демо «Стандарт» · заявки никуда не отправляются</span></div>
- <div class="mode"><button class="on" data-mode="client">Глазами клиента</button><button data-mode="owner">Глазами мастера</button></div>
  <div class="wrap">
 
- <!-- ===== КЛИЕНТ ===== -->
  <section class="page on" id="home">
   <div class="banner"><div><b>−15% на сборку мебели</b><small>до конца месяца · баннер акции</small></div></div>
   <div class="hero">
@@ -127,11 +101,31 @@ nav button.on{background:rgba(255,122,26,.18);color:var(--acc)}
    <div class="err" id="err"></div>
    <p class="hint">В «Стандарте» свободные слоты не показываются: мастер проверяет время и подтверждает запись сам.</p>
   </div>
+
   <div id="done" hidden>
    <h2>Заявка отправлена</h2>
    <p>Мастер подтвердит время, и бот пришлёт вам сообщение.</p>
-   <div class="tgc" id="clientMsg" hidden><div class="who">Бот «Мастер рядом»</div><div class="msg" id="clientMsgText"></div></div>
-   <button class="btn dark" data-mode="owner">Посмотреть, что получил мастер →</button>
+
+   <div class="step">Шаг 1 · мастеру приходит уведомление</div>
+   <div class="tgc"><div class="who">Бот «Мастер рядом» → мастеру</div><div class="msg" id="ownerMsg"></div>
+    <div class="kb"><button id="openConfirm">✅ Подтвердить</button><button id="openTable">📋 Открыть таблицу</button></div></div>
+   <p class="hint" id="tableHint" hidden>Кнопка открывает онлайн-таблицу заявок: там все записи, их статусы и календарь. Заявка попадает туда автоматически.</p>
+
+   <div id="confirmBox" hidden>
+    <div class="step">Шаг 2 · мастер подтверждает запись</div>
+    <div class="sheet">
+     <b>Заявка</b>
+     <div id="confirmText" style="margin-top:8px;line-height:1.6"></div>
+     <div class="acts"><button style="background:var(--ok)" id="btnOk">Подтвердить</button><button style="background:var(--no)" id="btnNo">Отменить</button></div>
+    </div>
+   </div>
+
+   <div id="clientBox" hidden>
+    <div class="step">Шаг 3 · клиенту приходит ответ</div>
+    <div class="tgc"><div class="who">Бот «Мастер рядом» → клиенту</div><div class="msg" id="clientMsgText"></div></div>
+   </div>
+
+   <p class="hint" style="margin-top:14px">Таблица заявок с календарём, переписка с клиентами и статистика бота доступны мастеру в онлайн-таблице и панели администратора.</p>
    <button class="btn ghost" id="again">Новая заявка</button>
   </div>
  </section>
@@ -143,47 +137,14 @@ nav button.on{background:rgba(255,122,26,.18);color:var(--acc)}
   <div class="svc"><div><b>Без выходных</b><small>с 8:00 до 22:00</small></div></div>
  </section>
 
- <!-- ===== МАСТЕР ===== -->
- <section class="page" id="inbox">
-  <h2>Уведомления</h2>
-  <div id="inboxList"><div class="empty">Новых заявок нет. Оставьте заявку «глазами клиента».</div></div>
-  <div id="confirmBox" hidden>
-   <div class="sheet">
-    <b>Заявка</b>
-    <div id="confirmText" style="margin-top:8px;line-height:1.6"></div>
-    <div class="acts"><button style="background:var(--ok)" id="btnOk">Подтвердить</button><button style="background:var(--no)" id="btnNo">Отменить</button></div>
-   </div>
-   <p class="hint">Это страница подтверждения, которая открывается по кнопке из уведомления.</p>
-  </div>
- </section>
-
- <section class="page" id="base">
-  <h2>База заявок</h2>
-  <div class="tbl"><table><thead><tr><th>Клиент</th><th>Услуги</th><th>Дата</th><th>Время</th><th>Статус</th></tr></thead><tbody id="rows"></tbody></table></div>
-  <h2 style="margin-top:20px">Календарь записей</h2>
-  <div class="cal" id="cal"></div>
- </section>
-
- <section class="page" id="stats">
-  <h2>Статистика бота</h2>
-  <div class="kpi"><div><b>214</b><small>пользователей</small></div><div><b>+37</b><small>за неделю</small></div><div><b>58%</b><small>активных</small></div></div>
-  <div class="bars" id="bars"></div>
-  <p class="hint">Какие страницы и команды открывали пользователи за 30 дней.</p>
- </section>
-
  </div>
 </div>
 
-<nav id="navClient">
+<nav>
  <button class="on" data-go="home">Главная</button>
  <button data-go="services">Услуги</button>
  <button data-go="apply">Заявка</button>
  <button data-go="contacts">Контакты</button>
-</nav>
-<nav id="navOwner" hidden>
- <button data-go="inbox">Уведомления</button>
- <button data-go="base">База</button>
- <button data-go="stats">Статистика</button>
 </nav>
 
 <script>
@@ -196,15 +157,6 @@ const SERVICES=[
 const pad=n=>("0"+n).slice(-2);
 const iso=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
 const ru=s=>{const[y,m,d]=s.split("-");return d+"."+m+"."+y.slice(2)};
-const day=k=>{const d=new Date();d.setDate(d.getDate()+k);return iso(d)};
-// заявки, которые уже есть в базе
-const ROWS=[
- {n:"Гаяне",s:"Подключение люстры",d:day(0),t:"10:00",st:"ok"},
- {n:"Давид",s:"Сборка шкафа",d:day(1),t:"12:00",st:"ok"},
- {n:"Мариам",s:"Замена смесителя",d:day(2),t:"09:30",st:"new"},
- {n:"Артур",s:"Навеска телевизора",d:day(4),t:"17:00",st:"ok"}
-];
-const STATS=[["Главная",100],["Услуги",72],["Заявка",41],["Акции",33],["Контакты",18]];
 
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const tg=window.Telegram&&Telegram.WebApp;
@@ -212,59 +164,38 @@ if(tg){tg.ready();tg.expand();try{tg.BackButton.show();tg.BackButton.onClick(()=
 
 $("#svcList").innerHTML=SERVICES.map(g=>`<div class="cat">${g.cat}</div>`+g.items.map(i=>`<div class="svc"><div><b>${i[0]}</b></div><em>${i[1]}</em></div>`).join("")).join("");
 $("#svcChips").innerHTML=SERVICES.flatMap(g=>g.items).map(i=>`<label><input type="checkbox" value="${i[0]}">${i[0]}</label>`).join("");
-$("#f_date").value=day(1);
-$("#bars").innerHTML=STATS.map(s=>`<div class="bar"><span>${s[0]}</span><i style="width:${s[1]*1.6}px"></i><em>${s[1]}%</em></div>`).join("");
+const t=new Date();t.setDate(t.getDate()+1);$("#f_date").value=iso(t);
 
-let mode="client",pending=null;
 function go(id){$$(".page").forEach(p=>p.classList.toggle("on",p.id===id));
  $$("nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===id));$("#app").scrollTo(0,0)}
-function setMode(m){mode=m;$$(".mode button").forEach(b=>b.classList.toggle("on",b.dataset.mode===m));
- $("#navClient").hidden=m!=="client";$("#navOwner").hidden=m!=="owner";go(m==="client"?"home":"inbox")}
-document.addEventListener("click",e=>{
- const g=e.target.closest("[data-go]");if(g)go(g.dataset.go);
- const m=e.target.closest("[data-mode]");if(m)setMode(m.dataset.mode);
-});
+document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g)go(g.dataset.go)});
 
-function renderBase(){
- const lbl={new:"Новая",ok:"Подтверждена",no:"Отменена"};
- $("#rows").innerHTML=ROWS.slice().sort((a,b)=>(a.d+a.t).localeCompare(b.d+b.t)).map(r=>`<tr><td>${r.n}</td><td>${r.s}</td><td>${ru(r.d)}</td><td>${r.t}</td><td><span class="st ${r.st}">${lbl[r.st]}</span></td></tr>`).join("");
- const names=["Вс","Пн","Вт","Ср","Чт","Пт","Сб"];
- $("#cal").innerHTML=[0,1,2,3,4,5,6].map(k=>{const d=day(k),dt=new Date(d+"T12:00");
-  const ev=ROWS.filter(r=>r.d===d&&r.st!=="no").map(r=>`<div class="ev ${r.st==="ok"?"ok":""}">${r.t} ${r.n}</div>`).join("");
-  return `<div class="day"><b>${names[dt.getDay()]} ${dt.getDate()}</b>${ev}</div>`}).join("");
-}
-renderBase();
-
+let req=null;
 // клиент отправляет заявку
 $("#send").onclick=()=>{
  const svc=$$("#svcChips input:checked").map(i=>i.value),n=$("#f_name").value.trim();
  if(!svc.length||!n){$("#err").textContent="Выберите услугу и укажите имя";return}
  $("#err").textContent="";
- pending={n,s:svc.join(", "),d:$("#f_date").value,t:$("#f_time").value,st:"new"};
- ROWS.push(pending);renderBase();
- $("#inboxList").innerHTML=`<div class="tgc"><div class="who">Бот «Мастер рядом»</div><div class="msg">🆕 <b>Новая заявка</b><br>Услуги: ${pending.s}<br>Дата: ${ru(pending.d)}<br>Время: ${pending.t}</div>
-  <div class="kb"><button id="openConfirm">✅ Подтвердить</button><button data-go="base">📋 Открыть таблицу</button></div></div>`;
- $("#confirmBox").hidden=true;$("#clientMsg").hidden=true;
+ req={n,s:svc.join(", "),d:$("#f_date").value,t:$("#f_time").value};
+ $("#ownerMsg").innerHTML=`🆕 <b>Новая заявка</b><br>Услуги: ${req.s}<br>Дата: ${ru(req.d)}<br>Время: ${req.t}`;
+ $("#confirmBox").hidden=$("#clientBox").hidden=$("#tableHint").hidden=true;
  $("#formBox").hidden=true;$("#done").hidden=false;
  if(tg&&tg.HapticFeedback)tg.HapticFeedback.notificationOccurred("success");
 };
-$("#again").onclick=()=>{$("#formBox").hidden=false;$("#done").hidden=true};
-
+$("#again").onclick=()=>{$("#formBox").hidden=false;$("#done").hidden=true;$("#app").scrollTo(0,0)};
+$("#openTable").onclick=()=>{$("#tableHint").hidden=false};
 // мастер открывает страницу подтверждения
-document.addEventListener("click",e=>{if(!e.target.closest("#openConfirm")||!pending)return;
- $("#confirmText").innerHTML=`Клиент: ${pending.n}<br>Услуги: ${pending.s}<br>Дата: ${ru(pending.d)}<br>Время: ${pending.t}`;
- $("#confirmBox").hidden=false;$("#btnOk").disabled=$("#btnNo").disabled=false;
-});
-function decide(ok){if(!pending)return;
- pending.st=ok?"ok":"no";renderBase();
- $("#clientMsgText").innerHTML=ok?`✅ <b>Ваша запись подтверждена</b><br>Услуги: ${pending.s}<br>Дата: ${ru(pending.d)}<br>Время: ${pending.t}<br>Ждём вас!`
-  :`❌ К сожалению, запись на ${ru(pending.d)} в ${pending.t} отменена.<br>Выберите другое время в приложении.`;
- $("#clientMsg").hidden=false;
- $("#confirmText").innerHTML+=`<p class="hint" style="margin-top:10px">${ok?"Подтверждено ✅":"Отменено ❌"} Клиент получил сообщение — переключитесь на «Глазами клиента».</p>`;
- $("#btnOk").disabled=$("#btnNo").disabled=true;
+$("#openConfirm").onclick=()=>{
+ $("#confirmText").innerHTML=`Клиент: ${req.n}<br>Услуги: ${req.s}<br>Дата: ${ru(req.d)}<br>Время: ${req.t}`;
+ $("#btnOk").disabled=$("#btnNo").disabled=false;$("#clientBox").hidden=true;$("#confirmBox").hidden=false;
+ $("#confirmBox").scrollIntoView({behavior:"smooth",block:"center"});
+};
+function decide(ok){
+ $("#clientMsgText").innerHTML=ok?`✅ <b>Ваша запись подтверждена</b><br>Услуги: ${req.s}<br>Дата: ${ru(req.d)}<br>Время: ${req.t}<br>Ждём вас!`
+  :`❌ К сожалению, запись на ${ru(req.d)} в ${req.t} отменена.<br>Выберите другое время в приложении.`;
+ $("#btnOk").disabled=$("#btnNo").disabled=true;$("#clientBox").hidden=false;
+ $("#clientBox").scrollIntoView({behavior:"smooth",block:"center"});
 }
 $("#btnOk").onclick=()=>decide(true);$("#btnNo").onclick=()=>decide(false);
-// после решения мастера клиент видит сообщение на экране «Заявка отправлена»
-document.querySelector('.mode [data-mode="client"]').addEventListener("click",()=>{if(pending&&pending.st!=="new")setTimeout(()=>go("apply"),0)});
 </script>
 </body></html>
