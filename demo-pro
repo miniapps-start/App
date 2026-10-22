@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Демо «Про» — Свежий дом</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+/* ===== Фирменные цвета демо-клининга ===== */
+:root{--bg:#eef6f4;--card:#fff;--ink:#12302b;--mut:#5f7a74;--line:#d7e8e3;--acc:#0f8b76;--acc2:#7fd1bf;--soft:#e2f3ee;--busy:#e7ecea;--no:#c0392b;
+--disp:"Comfortaa",-apple-system,sans-serif;--sans:"Golos Text",-apple-system,"Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg)}
+body{font:400 15px/1.5 var(--sans);color:var(--ink);overflow:hidden}
+#app{position:fixed;inset:0;overflow-y:auto;overflow-x:hidden;padding-bottom:96px}
+.demo{position:sticky;top:0;z-index:9;display:flex;align-items:center;gap:10px;padding:9px 14px;background:#111;color:#f1d9a0;font:600 12px/1.3 var(--sans)}
+.demo a{color:#f1d9a0;text-decoration:none;border:1px solid rgba(241,217,160,.4);border-radius:10px;padding:5px 9px;white-space:nowrap}
+.demo span{flex:1;opacity:.85}
+.mode{display:flex;gap:6px;max-width:480px;margin:12px auto 0;padding:0 18px}
+.mode button{flex:1;border:1px solid var(--line);background:#fff;color:var(--mut);border-radius:12px;padding:9px;font:600 13px var(--sans);cursor:pointer}
+.mode button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.wrap{max-width:480px;margin:auto;padding:0 18px}
+.page{display:none;padding:18px 0}.page.on{display:block;animation:in .3s ease}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h1{font:700 30px/1.1 var(--disp)}
+h2{font:700 22px/1.15 var(--disp);margin:4px 0 14px}
+h3{font:700 15px var(--sans);margin:18px 0 8px}
+p{color:var(--mut)}
+.hero{border-radius:24px;padding:24px 20px;background:linear-gradient(150deg,#0f8b76,#13a58b);color:#fff;margin-bottom:14px}
+.hero p{color:#d9f3ec;margin-top:8px}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;border:0;border-radius:14px;padding:15px;font:700 15px var(--sans);cursor:pointer;background:var(--acc);color:#fff;margin-top:14px}
+.btn.light{background:#fff;color:var(--acc)}.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.5}
+.svc{display:flex;align-items:center;gap:10px;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:13px 14px;margin-bottom:8px;cursor:pointer}
+.svc.on{border-color:var(--acc);background:var(--soft)}
+.svc div{flex:1;min-width:0}.svc small{color:var(--mut);display:block}
+.svc em{font-style:normal;font-weight:700;white-space:nowrap}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
+.days::-webkit-scrollbar{display:none}
+.d{flex:0 0 58px;text-align:center;background:#fff;border:2px solid var(--line);border-radius:14px;padding:8px 0;cursor:pointer}
+.d small{display:block;color:var(--mut);font-size:11px}.d b{font-size:18px}
+.d.on{border-color:var(--acc);background:var(--soft)}.d.full{opacity:.45}
+.slots{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.s{border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px 0;text-align:center;font-weight:600;cursor:pointer}
+.s.busy{background:var(--busy);color:#9fb1ac;border-color:var(--busy);cursor:not-allowed;text-decoration:line-through}
+.s.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.s.flash{animation:fl .6s ease 2}@keyframes fl{50%{background:#fbe9e7;border-color:var(--no)}}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--mut);margin:10px 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:4px;vertical-align:-2px;margin-right:4px}
+.sum{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:14px;line-height:1.6}
+.warn{background:#fbe9e7;color:var(--no);border-radius:12px;padding:10px 12px;font-size:13px;margin-top:10px}
+.sim{display:block;width:100%;margin-top:10px;border:1px dashed var(--acc2);background:transparent;color:var(--acc);border-radius:12px;padding:10px;font:600 13px var(--sans);cursor:pointer}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px}
+.card .top{display:flex;justify-content:space-between;gap:8px}
+.card small{color:var(--mut)}
+.st{display:inline-block;border-radius:8px;padding:2px 8px;font-weight:600;font-size:12px;white-space:nowrap}
+.st.ok{background:#e2f3ee;color:var(--acc)}.st.no{background:#fbe9e7;color:var(--no)}.st.done{background:#eef0f2;color:#6b7380}
+.acts{display:flex;gap:8px;margin-top:10px}
+.acts button{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px;font:600 13px var(--sans);cursor:pointer;color:var(--ink)}
+.chat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;min-height:220px;display:flex;flex-direction:column;gap:8px}
+.b{max-width:80%;padding:9px 12px;border-radius:14px 14px 14px 4px;background:var(--soft);font-size:14px}
+.b.me{align-self:flex-end;background:var(--acc);color:#fff;border-radius:14px 14px 4px 14px}
+.b small{display:block;font-size:10px;opacity:.7}
+.send{display:flex;gap:8px;margin-top:10px}
+.send input{flex:1}
+.send button{border:0;background:var(--acc);color:#fff;border-radius:12px;padding:0 16px;font-weight:700;cursor:pointer}
+input,select{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink);font:15px var(--sans);outline:0}
+.kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kpi div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}
+.kpi b{display:block;font:700 20px var(--disp)}.kpi small{color:var(--mut);font-size:12px}
+.chart{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;align-items:flex-end;gap:8px;height:150px}
+.chart div{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:var(--mut)}
+.chart i{width:100%;border-radius:6px 6px 2px 2px;background:var(--acc2)}
+.chart div.today i{background:var(--acc)}
+.bar{display:flex;align-items:center;gap:8px;margin:7px 0;font-size:13px}
+.bar span{flex:0 0 130px;color:var(--mut)}
+.bar i{display:block;height:10px;border-radius:5px;background:var(--acc)}
+.hours{background:#fff;border:1px solid var(--line);border-radius:16px;padding:6px 14px}
+.hours label{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.hours label:last-child{border-bottom:0}
+.hours input{width:auto}
+.rem{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px;font-size:14px}
+.rem i{font-style:normal;font-size:18px}
+.hint{font-size:12px;color:var(--mut);margin-top:8px}
+nav{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));max-width:480px;margin:auto;display:flex;padding:6px;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 30px rgba(15,80,70,.12);z-index:8}
+nav button{flex:1;border:0;background:none;color:var(--mut);font:600 11px var(--sans);padding:8px 2px;border-radius:14px;cursor:pointer}
+nav button.on{background:var(--soft);color:var(--acc)}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style></head><body>
+<div id="app">
+ <div class="demo"><a href="index.html#cases">← Назад</a><span>Демо «Про» · записи никуда не отправляются</span></div>
+ <div class="mode"><button class="on" data-mode="client">Кабинет клиента</button><button data-mode="owner">Кабинет владельца</button></div>
+ <div class="wrap">
+
+ <!-- ===== КЛИЕНТ ===== -->
+ <section class="page on" id="home">
+  <div class="hero">
+   <h1>Свежий дом</h1>
+   <p>Уборка квартир и домов в Ереване. Выберите услугу и свободное время — запись подтверждается сразу.</p>
+   <button class="btn light" data-go="book">Записаться на уборку</button>
+  </div>
+  <h3>Как это работает</h3>
+  <div class="card">Вы видите только свободное время с учётом длительности уборки. Занятое окно выбрать нельзя, поэтому накладок не бывает.</div>
+  <div class="card">Накануне бот напомнит о визите, а в «Моих записях» можно перенести или отменить уборку.</div>
+ </section>
+
+ <section class="page" id="book">
+  <h2>Запись</h2>
+  <h3>1. Услуга</h3>
+  <div id="svcList"></div>
+  <h3>2. День</h3>
+  <div class="days" id="days"></div>
+  <h3>3. Свободное время</h3>
+  <div class="legend"><span><i style="background:#fff;border:2px solid var(--line)"></i>свободно</span><span><i style="background:var(--busy)"></i>занято</span></div>
+  <div class="slots" id="slots"></div>
+  <div id="sumBox"></div>
+ </section>
+
+ <section class="page" id="my">
+  <h2>Мои записи</h2>
+  <div id="myList"></div>
+ </section>
+
+ <section class="page" id="chat">
+  <h2>Чат</h2>
+  <div class="chat" id="chatBox"></div>
+  <div class="send"><input id="chatIn" placeholder="Сообщение…"><button id="chatSend">→</button></div>
+  <p class="hint">Сообщения из бота и из приложения сходятся в один диалог.</p>
+ </section>
+
+ <!-- ===== ВЛАДЕЛЕЦ ===== -->
+ <section class="page" id="o_book">
+  <h2>Записи</h2>
+  <div id="oList"></div>
+ </section>
+
+ <section class="page" id="o_stats">
+  <h2>Статистика записей</h2>
+  <div class="kpi"><div><b id="k1">0</b><small>записей за 7 дней</small></div><div><b>34%</b><small>повторные клиенты</small></div><div><b>4%</b><small>отмены</small></div></div>
+  <h3>Загрузка по дням</h3>
+  <div class="chart" id="chart"></div>
+  <h3>Популярные услуги</h3>
+  <div class="card" id="pop"></div>
+ </section>
+
+ <section class="page" id="o_set">
+  <h2>Расписание</h2>
+  <div class="hours" id="hours"></div>
+  <p class="hint">Выключенный день сразу исчезает из записи у клиентов.</p>
+  <h3>Напоминания клиентам</h3>
+  <div id="rems"></div>
+ </section>
+
+ <section class="page" id="o_chat">
+  <h2>Чаты с клиентами</h2>
+  <div id="oChats"></div>
+ </section>
+
+ </div>
+</div>
+
+<nav id="navClient">
+ <button class="on" data-go="home">Главная</button>
+ <button data-go="book">Запись</button>
+ <button data-go="my">Мои записи</button>
+ <button data-go="chat">Чат</button>
+</nav>
+<nav id="navOwner" hidden>
+ <button data-go="o_book">Записи</button>
+ <button data-go="o_stats">Статистика</button>
+ <button data-go="o_set">Расписание</button>
+ <button data-go="o_chat">Чаты</button>
+</nav>
+
+<script>
+// ===== Данные демо =====
+const SVC=[{n:"Поддерживающая уборка",h:2,p:"18 000 ֏"},{n:"Генеральная уборка",h:4,p:"35 000 ֏"},{n:"Мойка окон",h:1,p:"8 000 ֏"},{n:"Уборка после ремонта",h:5,p:"55 000 ֏"}];
+const OPEN=9,CLOSE=19;             // рабочие часы
+const DAYS_AHEAD=14;
+const WD=["Вс","Пн","Вт","Ср","Чт","Пт","Сб"];
+const WORK={0:false,1:true,2:true,3:true,4:true,5:true,6:true}; // воскресенье выходной
+const pad=n=>("0"+n).slice(-2);
+const iso=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const ru=s=>{const[y,m,d]=s.split("-");return d+"."+m+"."+y.slice(2)};
+const addDays=k=>{const d=new Date();d.setDate(d.getDate()+k);return d};
+
+// чужие записи (занятое время) — генерируются одинаково при каждом открытии
+const BOOKINGS=[];
+const NAMES=["Ани","Тигран","Лилит","Нарек","Сона","Карен","Ева"];
+for(let k=0;k<DAYS_AHEAD;k++){if(!WORK[addDays(k).getDay()])continue;const d=iso(addDays(k));const seed=(k*7+3)%5;
+ if(seed===0)BOOKINGS.push({d,s:9,h:4,n:NAMES[k%7],svc:"Генеральная уборка",me:false,st:"ok"});
+ if(seed===1||seed===3)BOOKINGS.push({d,s:12,h:2,n:NAMES[(k+2)%7],svc:"Поддерживающая уборка",me:false,st:"ok"});
+ if(seed===2)BOOKINGS.push({d,s:14,h:5,n:NAMES[(k+4)%7],svc:"Уборка после ремонта",me:false,st:"ok"});
+ if(seed!==4)BOOKINGS.push({d,s:17,h:1,n:NAMES[(k+5)%7],svc:"Мойка окон",me:false,st:"ok"});
+}
+// одна прошедшая запись клиента
+BOOKINGS.push({d:iso(addDays(-12)),s:10,h:2,n:"Вы",svc:"Поддерживающая уборка",me:true,st:"done"});
+
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const tg=window.Telegram&&Telegram.WebApp;
+if(tg){tg.ready();tg.expand();try{tg.BackButton.show();tg.BackButton.onClick(()=>location.href="index.html#cases")}catch(e){}}
+
+let sel={svc:0,day:null,slot:null},moving=null;
+
+// свободно ли окно [start, start+h) в день d
+function isFree(d,start,h,ignore){
+ if(start<OPEN||start+h>CLOSE)return false;
+ return !BOOKINGS.some(b=>b!==ignore&&b.d===d&&b.st==="ok"&&start<b.s+b.h&&b.s<start+h);
+}
+function freeSlots(d){const h=SVC[sel.svc].h,out=[];for(let t=OPEN;t+h<=CLOSE;t++)out.push({t,free:isFree(d,t,h,moving)});return out}
+
+function renderSvc(){$("#svcList").innerHTML=SVC.map((s,i)=>`<div class="svc${i===sel.svc?" on":""}" data-svc="${i}"><div><b>${s.n}</b><small>${s.h} ч</small></div><em>${s.p}</em></div>`).join("")}
+function renderDays(){
+ $("#days").innerHTML=Array.from({length:DAYS_AHEAD},(_,k)=>{const dt=addDays(k),d=iso(dt);
+  if(!WORK[dt.getDay()])return "";
+  const any=freeSlots(d).some(x=>x.free);
+  if(!sel.day&&any)sel.day=d;
+  return `<div class="d${d===sel.day?" on":""}${any?"":" full"}" data-day="${d}"><small>${k===0?"Сегодня":WD[dt.getDay()]}</small><b>${dt.getDate()}</b></div>`}).join("");
+}
+function renderSlots(){
+ if(!sel.day){$("#slots").innerHTML="";return}
+ $("#slots").innerHTML=freeSlots(sel.day).map(x=>`<div class="s${x.free?"":" busy"}${x.free&&sel.slot===x.t?" on":""}" data-slot="${x.t}" data-free="${x.free?1:0}">${pad(x.t)}:00</div>`).join("");
+ renderSum();
+}
+function renderSum(){
+ if(sel.slot===null){$("#sumBox").innerHTML="";return}
+ const s=SVC[sel.svc];
+ $("#sumBox").innerHTML=`<div class="sum"><b>${moving?"Перенос записи":"Ваша запись"}</b><br>${s.n}<br>${ru(sel.day)}, ${pad(sel.slot)}:00–${pad(sel.slot+s.h)}:00<br>Стоимость: ${s.p}</div>
+  <div id="warn"></div>
+  <button class="btn" id="bookBtn">${moving?"Перенести":"Записаться"}</button>
+  <button class="sim" id="simBtn">Смоделировать: другой клиент только что занял это время</button>`;
+}
+function renderAll(){renderSvc();renderDays();renderSlots();renderMy();renderOwner()}
+
+document.addEventListener("click",e=>{
+ const t=e.target;
+ const g=t.closest("[data-go]");if(g)go(g.dataset.go);
+ const m=t.closest("[data-mode]");if(m)setMode(m.dataset.mode);
+ const sv=t.closest("[data-svc]");if(sv){sel.svc=+sv.dataset.svc;sel.slot=null;renderSvc();renderDays();renderSlots()}
+ const dy=t.closest("[data-day]");if(dy){sel.day=dy.dataset.day;sel.slot=null;renderDays();renderSlots()}
+ const sl=t.closest("[data-slot]");if(sl&&sl.dataset.free==="1"){sel.slot=+sl.dataset.slot;renderSlots()}
+ if(t.closest("#simBtn")){ // кто-то другой занимает выбранное окно
+  BOOKINGS.push({d:sel.day,s:sel.slot,h:SVC[sel.svc].h,n:"Другой клиент",svc:SVC[sel.svc].n,me:false,st:"ok"});
+  t.closest("#simBtn").disabled=true;t.closest("#simBtn").textContent="Готово: теперь нажмите «"+(moving?"Перенести":"Записаться")+"»";
+ }
+ if(t.closest("#bookBtn"))book();
+ const a=t.closest("[data-act]");if(a)act(a.dataset.act,+a.dataset.i);
+ const day=t.closest("[data-wd]");if(day){WORK[+day.dataset.wd]=day.checked;sel.day=null;sel.slot=null;renderDays();renderSlots()}
+});
+
+// запись: сервер проверяет занятость в момент сохранения
+function book(){
+ const h=SVC[sel.svc].h;
+ if(!isFree(sel.day,sel.slot,h,moving)){
+  const slot=sel.slot;sel.slot=null;renderSlots();
+  const el=$(`[data-slot="${slot}"]`);if(el)el.classList.add("flash");
+  $("#sumBox").innerHTML=`<div class="warn">Это время только что занял другой клиент. Выберите другое окно.</div>`;
+  return;
+ }
+ if(moving){moving.d=sel.day;moving.s=sel.slot;moving.svc=SVC[sel.svc].n;moving.h=h;moving=null}
+ else BOOKINGS.push({d:sel.day,s:sel.slot,h,n:"Вы",svc:SVC[sel.svc].n,me:true,st:"ok"});
+ sel.slot=null;renderAll();
+ if(tg&&tg.HapticFeedback)tg.HapticFeedback.notificationOccurred("success");
+ go("my");
+}
+
+function renderMy(){
+ const mine=BOOKINGS.filter(b=>b.me).sort((a,b)=>(b.d+pad(b.s)).localeCompare(a.d+pad(a.s)));
+ $("#myList").innerHTML=mine.length?mine.map(b=>{const i=BOOKINGS.indexOf(b);
+  const lbl=b.st==="ok"?'<span class="st ok">Подтверждена</span>':b.st==="no"?'<span class="st no">Отменена</span>':'<span class="st done">Прошла</span>';
+  return `<div class="card"><div class="top"><b>${b.svc}</b>${lbl}</div><small>${ru(b.d)}, ${pad(b.s)}:00–${pad(b.s+b.h)}:00</small>
+   ${b.st==="ok"?`<div class="acts"><button data-act="move" data-i="${i}">Перенести</button><button data-act="cancel" data-i="${i}">Отменить</button></div>`:""}</div>`}).join("")
+  :`<div class="card">Записей пока нет.</div>`;
+}
+function act(kind,i){const b=BOOKINGS[i];
+ if(kind==="cancel"){b.st="no";renderAll()}
+ if(kind==="move"){moving=b;sel.svc=SVC.findIndex(s=>s.n===b.svc);sel.day=b.d;sel.slot=null;renderAll();go("book")}
+}
+
+// чат
+const CHAT=[{me:false,t:"Здравствуйте! Чем можем помочь?"}];
+function renderChat(){$("#chatBox").innerHTML=CHAT.map(m=>`<div class="b${m.me?" me":""}">${m.t}</div>`).join("")}
+$("#chatSend").onclick=()=>{const v=$("#chatIn").value.trim();if(!v)return;CHAT.push({me:true,t:v});$("#chatIn").value="";renderChat();
+ setTimeout(()=>{CHAT.push({me:false,t:"Спасибо! Ответим в течение 10 минут."});renderChat();renderOwner()},700)};
+
+// кабинет владельца
+function renderOwner(){
+ const up=BOOKINGS.filter(b=>b.st==="ok"&&b.d>=iso(new Date())).sort((a,b)=>(a.d+pad(a.s)).localeCompare(b.d+pad(b.s))).slice(0,8);
+ $("#oList").innerHTML=up.map(b=>`<div class="card"><div class="top"><b>${pad(b.s)}:00 · ${b.n}</b><span class="st ok">${ru(b.d)}</span></div><small>${b.svc} · ${b.h} ч</small></div>`).join("");
+ const week=Array.from({length:7},(_,k)=>{const d=iso(addDays(k));return{k,dt:addDays(k),n:BOOKINGS.filter(b=>b.d===d&&b.st==="ok").reduce((s,b)=>s+b.h,0)}});
+ $("#k1").textContent=BOOKINGS.filter(b=>b.st==="ok"&&b.d>=iso(new Date())&&b.d<=iso(addDays(6))).length;
+ $("#chart").innerHTML=week.map(w=>`<div class="${w.k===0?"today":""}"><i style="height:${Math.max(4,w.n*10)}px"></i>${WD[w.dt.getDay()]}</div>`).join("");
+ const cnt={};BOOKINGS.filter(b=>b.st!=="no").forEach(b=>cnt[b.svc]=(cnt[b.svc]||0)+1);
+ const max=Math.max(...Object.values(cnt));
+ $("#pop").innerHTML=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="bar"><span>${n}</span><i style="width:${c/max*120}px"></i>${c}</div>`).join("");
+ $("#hours").innerHTML=[1,2,3,4,5,6,0].map(d=>`<label>${["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"][d]} · ${pad(OPEN)}:00–${CLOSE}:00<input type="checkbox" data-wd="${d}"${WORK[d]?" checked":""}></label>`).join("");
+ const next=BOOKINGS.filter(b=>b.st==="ok"&&b.d>=iso(addDays(1))).sort((a,b)=>(a.d+pad(a.s)).localeCompare(b.d+pad(b.s))).slice(0,3);
+ $("#rems").innerHTML=next.map(b=>`<div class="rem"><i>🔔</i><div>${b.n}: напоминание ${ru(iso(new Date(new Date(b.d+"T12:00").getTime()-864e5)))} в 18:00<br><small style="color:var(--mut)">о записи ${ru(b.d)} в ${pad(b.s)}:00</small></div></div>`).join("");
+ const last=CHAT[CHAT.length-1];
+ $("#oChats").innerHTML=`<div class="card"><div class="top"><b>Вы (клиент)</b><small>сейчас</small></div><small>${last.t}</small></div>
+  <div class="card"><div class="top"><b>Лилит</b><small>вчера</small></div><small>Можно добавить мойку окон к уборке?</small></div>
+  <div class="card"><div class="top"><b>Карен</b><small>пн</small></div><small>Спасибо, всё отлично!</small></div>`;
+}
+
+function go(id){$$(".page").forEach(p=>p.classList.toggle("on",p.id===id));
+ $$("nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===id));$("#app").scrollTo(0,0)}
+function setMode(m){$$(".mode button").forEach(b=>b.classList.toggle("on",b.dataset.mode===m));
+ $("#navClient").hidden=m!=="client";$("#navOwner").hidden=m!=="owner";renderAll();go(m==="client"?"home":"o_book")}
+
+renderAll();renderChat();
+</script>
+</body></html>
