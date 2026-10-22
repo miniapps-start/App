@@ -121,6 +121,8 @@ background:radial-gradient(90% 110% at 50% 0%,rgba(212,175,106,.22),transparent 
 .cta .sh{margin:0 0 10px}
 .cta p{margin:0 0 22px;font-size:15px}
 .cta .btn{margin:0}
+.demo-card p{margin:6px 0 16px}.demo-card .btn{margin:0}
+.dtag{display:inline-block;margin-bottom:10px;padding:3px 10px;border-radius:12px;font:700 12px var(--sans);color:#1b1407;background:linear-gradient(180deg,var(--gold2),var(--gold))}
 button:focus,button:focus-visible,a:focus-visible,summary:focus-visible,select:focus-visible{outline:none}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
@@ -200,8 +202,10 @@ button:focus,button:focus-visible,a:focus-visible,summary:focus-visible,select:f
 
 <section class="page" id="cases">
  <h2>Примеры</h2>
- <p>Примеры мини-приложений скоро появятся здесь.</p>
- <div class="card"><h3>Демо для мастера маникюра</h3><p style="margin:0">Запись, портфолио работ и прайс. Скоро.</p></div>
+ <p>Три демо-приложения: в каждом можно пройти путь клиента и посмотреть, что видит владелец. Заявки в демо никуда не отправляются.</p>
+ <div class="card demo-card"><span class="dtag">Тариф «Старт»</span><h3>Студия маникюра</h3><p>Каталог с ценами, работы, контакты и форма записи. После заявки видно, как она приходит мастеру в Telegram.</p><a class="btn pri" href="demo-start.html">Открыть демо</a></div>
+ <div class="card demo-card"><span class="dtag">Тариф «Стандарт»</span><h3>Мастер на час</h3><p>Вызов мастера с датой и временем, подтверждение записи в 1 клик, сообщение клиенту, база заявок, календарь и статистика.</p><a class="btn pri" href="demo-standard.html">Открыть демо</a></div>
+ <div class="card demo-card"><span class="dtag">Тариф «Про»</span><h3>Клининг</h3><p>Запись только на свободное время, защита от двойной записи, кабинеты клиента и владельца, чат, статистика и напоминания.</p><a class="btn pri" href="demo-pro.html">Открыть демо</a></div>
 </section>
 
 <section class="page" id="faq">
@@ -335,6 +339,8 @@ function cards(){const h=CFG.PACKS.map(k=>`<div class="tc${k.hot?" hot":""}">${k
  $("#cmp").innerHTML='<div class="r h"><div></div><div>Старт</div><div>Стандарт</div><div>Про</div></div>'+
   CFG.CMP.map(r=>`<div class="r"><div><span class="nm"><span>${r[0]}</span>${r[4]?`<button class="q" type="button" aria-label="Подробнее: ${r[0]}" data-tip="${r[4]}">?</button>`:""}</span></div>${r.slice(1,4).map(v=>v===1?'<div class="y">✓</div>':v===0?'<div class="n">—</div>':`<div>${v}</div>`).join("")}</div>`).join("")}
 cards();center();addEventListener("load",center);
+// возврат из демо: index.html#cases открывает «Примеры»
+if(location.hash==="#cases")go("cases");
 // перетаскивание тарифов мышкой на компьютере
 $$("[data-rail]").forEach(r=>{let down=false,moved=false,sx=0,sl=0;
  r.addEventListener("mousedown",e=>{if(e.button!==0)return;down=true;moved=false;sx=e.clientX;sl=r.scrollLeft});
